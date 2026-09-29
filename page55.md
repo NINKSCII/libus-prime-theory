@@ -290,7 +290,7 @@ Verificar se `X=15, Y=27` é específico da Página 55 ou se aparece de maneira 
 
 ---
 
-# 10. Conclusão
+# 9.5 Conclusão
 
 O experimento realizado pelo **Libus Prime Analysis Engine v2** encontrou uma relação algébrica candidata na Página 55:
 
@@ -313,3 +313,414 @@ Se a resposta for positiva e o mecanismo produzir uma estrutura linguística coe
 **Nink — Libus Prime Analysis Engine v2**
 
 *Investigando a possível estrutura matemática interna do Liber Primus através de análise posicional, funções algébricas, módulo 29, Fibonacci, geometria e teoria dos números.*
+
+# 10. Engenharia Reversa Cega — Primeiros Testes de Descriptografia
+
+Após a identificação da função candidata
+
+**`f(x,y) = (15x + 27y) mod 29`**
+
+na análise estrutural da Página 55, o projeto avançou para uma nova etapa: a **Engenharia Reversa Cega**.
+
+Nesta etapa, o objetivo deixou de ser apenas identificar correlações entre as runas e passou a ser testar se essas relações poderiam ser utilizadas para **reconstruir o texto original da página**.
+
+A hipótese central continua sendo a existência de uma transformação dinâmica baseada nos valores das runas e no módulo 29, possivelmente combinada com uma sequência recorrente como Fibonacci.
+
+---
+
+# 11. A Engrenagem de Transições
+
+Antes de tentar descriptografar diretamente a página, o motor analisou as transições entre os valores consecutivos da Gematria Primus.
+
+Para duas runas consecutivas `a` e `b`, foi considerada a diferença modular:
+
+**`d = (b - a) mod 29`**
+
+A sequência inicial de transições observada na Página 55 foi:
+
+**`[4, 23, 20, 26, 8, 2, 26, 5, 25, 26, 23, 17, 8, 23, 4, 27, 26, 22, 17, 25, 6, 26, ...]`**
+
+Essa análise revelou uma característica relevante: determinados valores de transição aparecem repetidamente, incluindo o valor **26** em posições relativamente próximas.
+
+Esse comportamento motivou a hipótese de que as diferenças entre runas poderiam não ser apenas ruído estatístico, mas representar parte de uma **regra de transformação interna**.
+
+É importante, entretanto, distinguir a observação da interpretação:
+
+> A repetição de uma transição demonstra que determinado deslocamento ocorre várias vezes; isoladamente, ela não demonstra que exista uma "engrenagem" criptográfica.
+
+Por isso, a análise das transições foi utilizada como **ponto de partida para os testes seguintes**, e não como prova independente do mecanismo.
+
+---
+
+# 12. Motor de Descriptografia Dinâmica
+
+Com a hipótese de uma estrutura dinâmica estabelecida, o motor passou a testar diferentes formas de aplicação de uma sequência recorrente sobre os valores da página.
+
+Uma das hipóteses utilizadas foi a de uma sequência de **Fibonacci módulo 29**, combinada com os coeficientes encontrados anteriormente.
+
+Foram testados quatro modelos principais:
+
+| Teste       | Transformação                     | Language Score |
+| ----------- | --------------------------------- | -------------: |
+| **Teste 1** | Subtração direta por Fibonacci    |         **15** |
+| **Teste 2** | Subtração por `15 × Fibonacci`    |         **30** |
+| **Teste 4** | Combinação envolvendo `15x + 27y` |        **105** |
+| **Teste 3** | Subtração por `27 × Fibonacci`    |        **135** |
+
+O objetivo desses testes foi verificar se alguma transformação produzia uma sequência com características estatísticas mais próximas de linguagem natural.
+
+---
+
+# 13. O Resultado de Score 135
+
+O maior resultado obtido nessa primeira rodada foi:
+
+**Teste 3 — Score: 135**
+
+enquanto a linha de referência utilizada pelo experimento foi:
+
+**Score: 15**
+
+Assim, o melhor resultado apresentou uma pontuação aproximadamente:
+
+**`135 / 15 = 9×`**
+
+maior que a linha de referência.
+
+Esse aumento é relevante como **sinal experimental**, pois indica que a transformação associada ao coeficiente `27` produziu uma sequência considerada muito mais próxima do modelo linguístico utilizado pelo motor.
+
+Entretanto, o score não deve ser interpretado isoladamente como uma prova de descriptografia.
+
+Um Language Score mede apenas o quanto uma sequência se aproxima das características linguísticas esperadas pelo avaliador. Uma transformação incorreta também pode produzir pontuações elevadas por coincidência, especialmente quando várias transformações são testadas.
+
+Portanto:
+
+> **Score 135 é uma anomalia interessante e um candidato para investigação, não uma confirmação de plaintext.**
+
+O fato mais importante é que o resultado permite reduzir o espaço de hipóteses e direcionar os próximos testes.
+
+---
+
+# 14. O Parafuso Faltante
+
+Apesar do aumento significativo do Language Score, a sequência produzida pelo melhor teste **não apresentou texto legível**.
+
+Isso cria uma questão central:
+
+**Por que uma transformação produz uma pontuação linguística muito superior, mas não produz plaintext compreensível?**
+
+Uma possibilidade é que a transformação encontrada represente apenas **uma das etapas do processo criptográfico**.
+
+Nesse cenário, o mecanismo poderia ser representado como:
+
+```text
+RUNAS CIFRADAS
+      │
+      ▼
+TRANSFORMAÇÃO POSICIONAL
+      │
+      ▼
+SEQUÊNCIA INTERMEDIÁRIA
+      │
+      ▼
+CAMADA ADICIONAL
+      │
+      ▼
+PLAINTEXT
+```
+
+Isso introduz a hipótese de uma **camada intermediária** ainda não identificada.
+
+---
+
+# 15. Hipótese de uma Camada Atbash
+
+Uma das possibilidades levantadas é a utilização de uma transformação semelhante ao **Atbash** após a aplicação da função dinâmica.
+
+A hipótese seria:
+
+### Etapa 1
+
+Aplicar a transformação baseada na posição:
+
+**`Fibonacci + coeficientes algébricos`**
+
+### Etapa 2
+
+Aplicar uma transformação espelhada sobre os valores resultantes.
+
+### Etapa 3
+
+Interpretar os valores obtidos como possíveis caracteres do plaintext.
+
+O modelo hipotético seria:
+
+```text
+RUNA CIFRADA
+      │
+      ▼
+FIBONACCI / MOD 29
+      │
+      ▼
+COEFICIENTES 15 / 27
+      │
+      ▼
+TRANSFORMAÇÃO INTERMEDIÁRIA
+      │
+      ▼
+ATBASH / ESPELHAMENTO
+      │
+      ▼
+POSSÍVEL PLAINTEXT
+```
+
+Essa hipótese ainda precisa ser testada experimentalmente.
+
+O objetivo não é assumir que Atbash esteja presente, mas verificar se a aplicação dessa camada aumenta a coerência linguística de maneira **reprodutível e estatisticamente significativa**.
+
+---
+
+# 16. Hipótese Alternativa — Idioma do Plaintext
+
+Outra possibilidade considerada pelo projeto é que o texto original não seja necessariamente inglês.
+
+O *Liber Primus* apresenta referências linguísticas, filosóficas e literárias que tornam relevante testar mais de um modelo linguístico.
+
+Por isso, além do avaliador de inglês, uma futura versão do motor poderá utilizar modelos estatísticos para:
+
+* Inglês;
+* Latim;
+* Português, apenas como controle experimental;
+* outros idiomas relevantes ao corpus analisado.
+
+A hipótese do Latim é especialmente interessante porque o próprio título **Liber Primus** utiliza uma expressão latina.
+
+Entretanto, o título por si só **não demonstra que o plaintext da Página 55 seja latino**.
+
+A hipótese deverá ser testada comparando os scores obtidos por diferentes modelos linguísticos sobre as mesmas transformações.
+
+---
+
+# 17. Estado Atual da Hipótese
+
+Após os experimentos realizados na Página 55, a Libus Prime Theory possui agora duas etapas experimentais distintas.
+
+## Etapa A — Análise Estrutural
+
+Foi encontrada a função candidata:
+
+**`(15x + 27y) mod 29`**
+
+com:
+
+**10 correspondências em 74 transições = 13,51%**
+
+A função apresentou o maior número de correspondências entre as 841 combinações testadas.
+
+---
+
+## Etapa B — Engenharia Reversa
+
+A função e seus coeficientes foram incorporados a testes de descriptografia dinâmica.
+
+O maior Language Score observado foi:
+
+**135**
+
+contra:
+
+**15**
+
+na linha de referência utilizada.
+
+Isso representa aproximadamente **9× a pontuação da referência**.
+
+Porém, o resultado ainda não produziu plaintext legível.
+
+---
+
+# 18. Modelo Atual da Teoria
+
+A hipótese atual pode ser representada como:
+
+```text
+                 LIBUS PRIME THEORY
+                         │
+          ┌──────────────┴──────────────┐
+          │                             │
+          ▼                             ▼
+  ANÁLISE ESTRUTURAL             ENGENHARIA REVERSA
+          │                             │
+          ▼                             ▼
+  Gematria Primus                Fibonacci / mod 29
+          │                             │
+          ▼                             ▼
+  Relações posicionais           Coeficientes 15 / 27
+          │                             │
+          ▼                             ▼
+  f(x,y) = (15x + 27y) mod 29   Testes de transformação
+          │                             │
+          └──────────────┬──────────────┘
+                         │
+                         ▼
+                SEQUÊNCIA INTERMEDIÁRIA
+                         │
+                 ┌───────┴───────┐
+                 │               │
+                 ▼               ▼
+              ATBASH          IDIOMA
+                 │               │
+                 └───────┬───────┘
+                         ▼
+                  POSSÍVEL PLAINTEXT
+```
+
+Neste estágio, **Atbash e idioma alternativo são hipóteses**, enquanto os resultados de `X=15`, `Y=27` e do Language Score são observações experimentais.
+
+---
+
+# 19. Próximos Experimentos
+
+A próxima versão do **Libus Prime Analysis Engine** deverá testar sistematicamente:
+
+### 19.1 Inversão modular
+
+Partindo de:
+
+**`z = (15x + 27y) mod 29`**
+
+testar a recuperação de `y` através do inverso modular de `27`.
+
+Como:
+
+**`gcd(27,29) = 1`**
+
+o inverso modular existe.
+
+A operação poderá ser escrita como:
+
+**`y = (z - 15x) × 27⁻¹ mod 29`**
+
+---
+
+### 19.2 Atbash após a transformação
+
+Executar:
+
+```text
+Transformação → Atbash → Language Score
+```
+
+e comparar com:
+
+```text
+Transformação → Language Score
+```
+
+---
+
+### 19.3 Atbash antes da transformação
+
+Testar também a ordem inversa:
+
+```text
+Atbash → Transformação → Language Score
+```
+
+Isso permitirá verificar se a posição da possível camada Atbash influencia o resultado.
+
+---
+
+### 19.4 Fibonacci com diferentes estados iniciais
+
+Testar diferentes condições iniciais da sequência:
+
+```text
+F(0)=0, F(1)=1
+F(0)=1, F(1)=1
+```
+
+e outras possibilidades justificadas matematicamente.
+
+---
+
+### 19.5 Teste de todas as combinações de operação
+
+Em vez de assumir uma única ordem, o motor poderá testar sistematicamente:
+
+```text
+Fibonacci
+     ↓
+Coeficiente
+     ↓
+Atbash
+```
+
+```text
+Atbash
+     ↓
+Fibonacci
+     ↓
+Coeficiente
+```
+
+```text
+Coeficiente
+     ↓
+Fibonacci
+     ↓
+Atbash
+```
+
+e comparar os resultados através do mesmo sistema estatístico.
+
+---
+
+### 19.6 Validação fora da Página 55
+
+Caso uma transformação apresente resultado promissor na Página 55, ela deverá ser aplicada a outras páginas.
+
+O objetivo será verificar se o mecanismo é:
+
+**específico da Página 55**
+
+ou:
+
+**uma propriedade geral do Liber Primus.**
+
+---
+
+# 20. Conclusão Atual
+
+A pesquisa sobre a Página 55 avançou de uma simples análise de frequência para uma abordagem de **engenharia reversa experimental**.
+
+A investigação encontrou uma função candidata:
+
+**`f(x,y) = (15x + 27y) mod 29`**
+
+e posteriormente utilizou os coeficientes encontrados em diferentes modelos de transformação.
+
+O maior Language Score observado foi:
+
+**135**
+
+aproximadamente **9 vezes** a linha de referência utilizada no experimento.
+
+Apesar disso, o resultado ainda não produziu plaintext legível.
+
+Isso estabelece o próximo problema da pesquisa:
+
+> **A transformação encontrada representa o mecanismo completo ou apenas uma camada intermediária da cifra?**
+
+A partir daqui, a investigação passa a testar sistematicamente essa possibilidade através de **inversão modular, Fibonacci, Atbash, diferentes modelos linguísticos, permutações e validação cruzada em outras páginas**.
+
+O objetivo permanece o mesmo: determinar se os padrões encontrados na Página 55 representam uma propriedade real da estrutura criptográfica do *Liber Primus* ou uma correlação estatística produzida pelo processo de busca.
+
+---
+
+## Libus Prime Theory
+
+**Nink — Libus Prime Analysis Engine v2**
+
+*Investigando a possível estrutura matemática interna do Liber Primus através de análise posicional, funções algébricas, módulo 29, Fibonacci, geometria, teoria dos números e engenharia reversa criptográfica.*
+
