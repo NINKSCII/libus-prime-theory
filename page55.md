@@ -2231,4 +2231,564 @@ Validação em uma amostra maior
 
 *Investigando a possível estrutura matemática interna do Liber Primus através de análise posicional, Gematria Primus, aritmética modular, função totiente de Euler, teoria dos números e validação estatística.*
 
+# Libus Prime Theory — Continuação da Análise da Página 55
+
+## 61. Nova Interpretação da Relação `(15x + 27y) mod 29`
+
+Os experimentos mais recentes realizados sobre a Página 55 modificaram a interpretação da relação:
+
+**`(15x + 27y) mod 29`**
+
+Nos testes anteriores, essa relação havia sido investigada principalmente como uma possível transformação ou mecanismo de descriptografia.
+
+Os novos testes indicaram que sua ocorrência está concentrada principalmente na própria sequência de **ciphertext** da Página 55.
+
+Por isso, para a Página 55, a relação passa a ser tratada como uma possível **assinatura estrutural da sequência cifrada**, e não como uma chave de descriptografia direta.
+
+A expressão pode ser representada como:
+
+**`Aᵢ = (15Cᵢ₋₁ + 27Cᵢ) mod 29`**
+
+onde:
+
+* `Cᵢ₋₁` = valor da runa cifrada anterior;
+* `Cᵢ` = valor da runa cifrada atual;
+* `Aᵢ` = assinatura calculada naquela posição.
+
+Essa interpretação preserva a observação original da Página 55 sem assumir que a equação seja responsável diretamente pela recuperação do plaintext.
+
+---
+
+# 62. Comparação Entre Ciphertext, Plaintext e Estado
+
+Para investigar onde a relação `(15x + 27y) mod 29` realmente apresenta comportamento anômalo, o motor realizou uma comparação entre três estruturas associadas à Página 55:
+
+| Estrutura          | Correspondência |
+| ------------------ | --------------: |
+| Plaintext (P)      |       **2,70%** |
+| Chave / Estado (K) |       **1,35%** |
+| Ciphertext (C)     |      **13,51%** |
+| Linha de base      |     **≈ 3,45%** |
+
+O resultado observado concentra a maior frequência na sequência cifrada.
+
+A Página 55 apresentou:
+
+**13,51% no ciphertext**
+
+contra:
+
+**2,70% no plaintext**
+
+e:
+
+**1,35% no fluxo de chave/estado testado.**
+
+A linha de base utilizada para uma correspondência específica em um espaço de 29 valores é:
+
+**`1 / 29 ≈ 3,45%`**
+
+Assim, a relação anteriormente encontrada na Página 55 não apresentou o mesmo comportamento nas três estruturas.
+
+Isso levou a uma mudança específica na interpretação do papel da função dentro da análise da Página 55.
+
+---
+
+# 63. A Função Como Assinatura do Ciphertext
+
+A hipótese atualmente utilizada para interpretar o resultado da Página 55 é:
+
+```text
+(15x + 27y) mod 29
+            ↓
+   Assinatura estrutural
+            ↓
+       Ciphertext
+```
+
+em vez de:
+
+```text
+(15x + 27y) mod 29
+            ↓
+      Chave direta
+            ↓
+        Plaintext
+```
+
+Essa distinção é importante porque os testes anteriores mostraram que utilizar diretamente a relação como mecanismo de descriptografia não produziu um plaintext completo.
+
+Ao mesmo tempo, a relação manteve a concentração de correspondências na sequência cifrada.
+
+Portanto, uma possibilidade atualmente investigada é que a função descreva alguma propriedade interna da organização do ciphertext da Página 55.
+
+Isso também permite interpretar a descoberta anterior de `X = 15` e `Y = 27` de maneira diferente: os coeficientes podem estar relacionados à estrutura da sequência sem necessariamente representarem diretamente os deslocamentos utilizados para recuperar cada caractere.
+
+---
+
+# 64. Forma Recorrente da Assinatura
+
+A representação mais específica da relação para a Página 55 passou a ser:
+
+**`Aᵢ = (15Cᵢ₋₁ + 27Cᵢ) mod 29`**
+
+Essa forma evidencia que a assinatura depende de duas posições consecutivas do ciphertext.
+
+Portanto, o valor de `Aᵢ` depende simultaneamente de:
+
+```text
+Cᵢ₋₁
+   +
+Cᵢ
+```
+
+Essa característica torna a relação compatível, em termos estruturais, com uma possível forma de **realimentação ou recorrência**.
+
+Uma das estruturas matemáticas que pode apresentar comportamento semelhante é um **LFSR**.
+
+Entretanto, para a Página 55, o LFSR deve continuar sendo tratado apenas como uma **possível implementação estrutural**, pois os testes realizados não demonstraram que essa seja necessariamente a estrutura utilizada no *Liber Primus*.
+
+---
+
+# 65. Separação Entre Assinatura e Máquina de Estados
+
+Os novos experimentos da Página 55 introduziram uma separação entre duas possíveis funções matemáticas.
+
+### Camada 1 — Assinatura estrutural
+
+**`Aᵢ = (15Cᵢ₋₁ + 27Cᵢ) mod 29`**
+
+Essa camada descreve uma propriedade calculada diretamente a partir do ciphertext.
+
+### Camada 2 — Máquina de estados
+
+A segunda camada utiliza uma sequência de números primos e a função totiente:
+
+**`kᵢ = φ(pᵢ) mod 29`**
+
+Como `pᵢ` é primo:
+
+**`φ(pᵢ) = pᵢ − 1`**
+
+A transformação testada para a Página 55 foi:
+
+**`Pᵢ = (Cᵢ − kᵢ) mod 29`**
+
+Assim, as duas estruturas passam a ser tratadas separadamente:
+
+```text
+CIPHERTEXT
+    │
+    ├───────────────► Assinatura
+    │                  Aᵢ = (15Cᵢ₋₁ + 27Cᵢ) mod 29
+    │
+    └───────────────► Máquina de estados
+                       kᵢ = φ(pᵢ) mod 29
+                              │
+                              ▼
+                       Pᵢ = (Cᵢ − kᵢ) mod 29
+```
+
+O objetivo passa a ser investigar se existe uma relação entre essas duas camadas.
+
+---
+
+# 66. Máquina de Estados e Regra F-skip
+
+A máquina de estados testada na Página 55 utiliza uma regra adicional denominada **F-skip**.
+
+Na Gematria Primus utilizada pelo motor:
+
+**`F = 0`**
+
+Quando o plaintext produzido em uma posição corresponde a `F`, o estado não avança.
+
+A regra é:
+
+```text
+Se Pᵢ = F:
+
+estado(i+1) = estado(i)
+
+Caso contrário:
+
+estado(i+1) = estado(i) + 1
+```
+
+Dessa forma, o próximo deslocamento depende não apenas da sequência de primos, mas também do resultado produzido pela própria descriptografia.
+
+O comportamento pode ser representado como:
+
+```text
+Estado atual
+     │
+     ▼
+  Primo pᵢ
+     │
+     ▼
+ φ(pᵢ) mod 29
+     │
+     ▼
+ Deslocamento kᵢ
+     │
+     ▼
+Pᵢ = (Cᵢ − kᵢ) mod 29
+     │
+     ▼
+   Pᵢ = F ?
+   /      \
+ SIM      NÃO
+  │         │
+  ▼         ▼
+Mantém     Avança
+estado     estado
+```
+
+Essa característica torna a sequência dependente do próprio resultado da transformação.
+
+Consequentemente, uma pequena diferença no estado inicial pode alterar os deslocamentos utilizados nas posições seguintes.
+
+---
+
+# 67. Teste de Diferentes Pontos de Partida
+
+Para verificar se a sequência de estados poderia estar simplesmente desalinhada em relação à Página 55, foram testados diferentes pontos de partida na sequência de primos:
+
+```text
+2, 3, 5, 7, 11, 13, ...
+```
+
+A máquina foi executada utilizando diferentes posições iniciais dessa sequência.
+
+O melhor resultado registrado na Página 55 ocorreu iniciando no:
+
+**primo 7**
+
+correspondente ao:
+
+**índice 3**
+
+da sequência utilizada pelo motor.
+
+A combinação também utilizou a regra de **F-skip**.
+
+O resultado alcançou:
+
+**Language Score = 200**
+
+Esse resultado é superior aos principais scores anteriores obtidos por alguns dos modelos testados na Página 55.
+
+Entretanto, o resultado ainda **não produziu um plaintext completo e inequívoco**.
+
+Portanto, o Score 200 deve ser registrado como um novo resultado experimental da Página 55, e não como uma descriptografia concluída.
+
+---
+
+# 68. O Problema da Dessincronização
+
+A aplicação da máquina de estados revelou uma característica importante da Página 55.
+
+Como o estado seguinte depende do estado anterior e, potencialmente, do próprio plaintext produzido, uma diferença inicial pode se propagar pela sequência.
+
+O comportamento pode ser representado como:
+
+```text
+Erro inicial
+     ↓
+Estado incorreto
+     ↓
+Deslocamento incorreto
+     ↓
+Plaintext diferente
+     ↓
+Regra F-skip diferente
+     ↓
+Próximo estado incorreto
+     ↓
+Divergência progressiva
+```
+
+Isso significa que uma pequena defasagem no início pode fazer com que toda a sequência posterior utilize estados diferentes dos esperados.
+
+Essa característica é particularmente relevante para a Página 55 porque a transcrição analisada possui apenas:
+
+**76 runas**
+
+Uma sequência desse tamanho oferece poucas posições para verificar se uma máquina de estados com realimentação consegue se corrigir ou revelar claramente seu estado inicial correto.
+
+---
+
+# 69. Limitação Específica da Página 55
+
+A limitação observada não significa que a máquina de estados seja matematicamente impossível de testar.
+
+O problema é que, com apenas 76 runas, torna-se difícil distinguir experimentalmente entre diferentes possibilidades:
+
+```text
+Estado inicial incorreto
+        │
+        ├── Regra de transição incorreta
+        │
+        ├── Chave parcialmente correta
+        │
+        ├── F-skip inadequado
+        │
+        ├── Transcrição incorreta
+        │
+        └── Coincidência estatística
+```
+
+Portanto, a Página 55 passa a ser tratada também como um **caso de teste estrutural**, e não apenas como uma tentativa isolada de descriptografia.
+
+Os resultados obtidos nela podem orientar a construção do modelo, mas uma sequência maior será necessária para verificar se o comportamento observado permanece estável.
+
+---
+
+# 70. Teste de Sincronia Entre as Duas Camadas
+
+Com a separação entre assinatura e máquina de estados, o próximo teste específico da Página 55 passa a ser uma análise posição por posição.
+
+Para cada posição `i`, deverão ser calculados:
+
+**`Aᵢ = (15Cᵢ₋₁ + 27Cᵢ) mod 29`**
+
+e os elementos correspondentes da máquina:
+
+* estado atual;
+* primo `pᵢ`;
+* `φ(pᵢ) mod 29`;
+* deslocamento `kᵢ`;
+* valor do ciphertext `Cᵢ`;
+* valor do plaintext `Pᵢ`;
+* ocorrência ou não de F-skip.
+
+A estrutura do teste será:
+
+```text
+Ciphertext
+    │
+    ├──► Aᵢ = (15Cᵢ₋₁ + 27Cᵢ) mod 29
+    │
+    └──► Máquina de estados
+             │
+             ├── pᵢ
+             ├── φ(pᵢ)
+             ├── kᵢ
+             ├── Pᵢ
+             └── F-skip
+```
+
+A pergunta específica para a Página 55 passa a ser:
+
+> **A assinatura algébrica apresenta alterações sincronizadas com mudanças no estado da máquina?**
+
+Essa análise é diferente de simplesmente procurar o maior Language Score.
+
+O objetivo é verificar uma possível relação estrutural entre as duas camadas.
+
+---
+
+# 71. Controles Para a Assinatura da Página 55
+
+Como a relação `(15,27)` foi originalmente encontrada dentro de uma busca por múltiplas combinações, a análise da Página 55 também deverá comparar seu comportamento com controles.
+
+Entre os controles possíveis estão:
+
+1. embaralhamento da ordem das runas;
+2. permutações da sequência;
+3. outras combinações de `(X,Y)`;
+4. regiões independentes da página;
+5. outras páginas do *Liber Primus*.
+
+Um dos testes mais diretamente relacionados à Página 55 será verificar se a assinatura:
+
+**`(15,27)`**
+
+depende da ordem original das runas.
+
+Se a frequência observada desaparecer quando a ordem for destruída, isso indicará que o comportamento está relacionado à organização sequencial dos valores.
+
+---
+
+# 72. Modelo Atual da Página 55
+
+Com as novas informações, a representação específica da Página 55 passa a ser:
+
+```text
+                 PÁGINA 55
+                     │
+                     ▼
+              GEMATRIA PRIMUS
+                     │
+                     ▼
+                 CIPHERTEXT
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+          ▼                     ▼
+ ASSINATURA ESTRUTURAL     MÁQUINA DE ESTADOS
+          │                     │
+          ▼                     ▼
+ Aᵢ=(15Cᵢ₋₁+27Cᵢ) mod29   pᵢ → φ(pᵢ) mod29
+          │                     │
+          │                     ▼
+          │                kᵢ = φ(pᵢ) mod29
+          │                     │
+          │                     ▼
+          │              Pᵢ=(Cᵢ−kᵢ) mod29
+          │                     │
+          │                     ▼
+          │                  F-skip
+          │                     │
+          └──────────┬──────────┘
+                     │
+                     ▼
+             ANÁLISE DE SINCRONIA
+```
+
+Nesse modelo, `(15x + 27y)` não precisa ser a chave utilizada para produzir o plaintext.
+
+Sua função investigada é identificar uma possível característica estrutural da sequência cifrada.
+
+A máquina de estados, por sua vez, representa o mecanismo de deslocamento testado.
+
+---
+
+# 73. Estado Experimental Atual da Página 55
+
+Os principais resultados específicos acumulados para a Página 55 passam a incluir:
+
+```text
+Runas analisadas:
+76
+
+Módulo:
+29
+
+Combinações X,Y testadas:
+841
+
+Melhor relação estrutural:
+X = 15
+Y = 27
+
+Correspondência no ciphertext:
+13,51%
+
+Correspondência no plaintext:
+2,70%
+
+Correspondência no fluxo de chave/estado:
+1,35%
+
+Linha de base:
+≈ 3,45%
+
+Máquina de estados:
+kᵢ = φ(pᵢ) mod 29
+
+Transformação:
+Pᵢ = (Cᵢ − kᵢ) mod 29
+
+Regra:
+F-skip
+
+Melhor ponto inicial testado:
+primo 7
+
+Índice:
+3
+
+Language Score:
+200
+```
+
+O resultado de Score 200 continua sem produzir um plaintext completo e inequívoco.
+
+A principal alteração conceitual é que a relação `(15x + 27y) mod 29` passa a ser analisada como uma possível **assinatura estrutural do ciphertext**, enquanto a sequência de primos e a função totiente formam a máquina de estados testada separadamente.
+
+---
+
+# 74. Próximo Teste Específico da Página 55
+
+A próxima análise da Página 55 deverá deixar de procurar apenas uma transformação que maximize o Language Score.
+
+O objetivo passa a ser verificar a relação:
+
+```text
+ASSINATURA
+    ↓
+ESTADO
+    ↓
+DESLOCAMENTO
+    ↓
+PLAINTEXT
+```
+
+Para isso, a sequência deverá ser analisada posição por posição, comparando:
+
+```text
+Aᵢ
+pᵢ
+φ(pᵢ)
+kᵢ
+Cᵢ
+Pᵢ
+F-skip
+```
+
+A principal questão será descobrir se a assinatura:
+
+**`Aᵢ = (15Cᵢ₋₁ + 27Cᵢ) mod 29`**
+
+contém alguma informação mensurável sobre o estado utilizado na mesma posição.
+
+Esse teste permitirá investigar diretamente a possível conexão entre a descoberta algébrica original e a nova máquina de estados.
+
+---
+
+## Atualização do Estado da Página 55
+
+A Página 55 passou, portanto, por três interpretações sucessivas dentro da investigação:
+
+```text
+FASE 1
+Relação algébrica candidata
+        ↓
+(15x + 27y) mod 29
+
+FASE 2
+Tentativa de utilizar a relação
+como mecanismo de geração de chave
+        ↓
+LFSR / Fibonacci / outras transformações
+        ↓
+falsos positivos
+
+FASE 3
+Totiente e transformação posicional
+        ↓
+φ(posição)
+        ↓
+scores elevados, mas falsos positivos
+
+NOVA INTERPRETAÇÃO
+        ↓
+(15x + 27y) mod 29
+        ↓
+ASSINATURA DO CIPHERTEXT
+        +
+        ↓
+MÁQUINA DE ESTADOS
+        ↓
+primos → φ(primo) → deslocamento
+        ↓
+F-skip
+        ↓
+ANÁLISE DE SINCRONIA
+```
+
+A Página 55 continua sendo o principal ambiente experimental para investigar a relação entre essas duas estruturas.
+
+O próximo passo não é substituir os resultados anteriores, mas determinar se a **assinatura estrutural** e a **máquina de estados** apresentam uma relação mensurável dentro da sequência de 76 runas.
 
