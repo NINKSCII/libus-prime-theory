@@ -1,9 +1,9 @@
 import math
 from collections import Counter
 
-# =======================================================
+
 # MÓDULO 1: GEMATRIA PRIMUS E CAMADA POSICIONAL
-# =======================================================
+
 class GematriaEngine:
     GEMATRIA = {
         'ᚠ': 0, 'ᚢ': 1, 'ᚦ': 2, 'ᚩ': 3, 'ᚱ': 4, 'ᚳ': 5, 'ᚷ': 6, 'ᚹ': 7,
@@ -51,9 +51,9 @@ class GematriaEngine:
             tag = " [Fibonacci]" if diff in pisano_seq else ""
             print(f"  Diferença {diff:2d}: {count} vezes{tag}")
 
-# =======================================================
+
 # MÓDULO 2: ESTRUTURA GEOMÉTRICA E INVARIANTES (MDC)
-# =======================================================
+
 class StructuralMatrixAnalyzer:
     @staticmethod
     def build_matrix(values, cols=14):
@@ -112,9 +112,10 @@ class StructuralMatrixAnalyzer:
             print(f"\nDensidade de Coprimalidade (MDC=1): {coprime_ratio:.2f}%")
             print(f"Densidade de Invariantes (MDC>1): {100 - coprime_ratio:.2f}%")
 
-# =======================================================
+
 # EXECUÇÃO COM O TEXTO REAL FORNECIDO
-# =======================================================
+
+
 if __name__ == "__main__":
     REAL_TEXT = """ᚠᛠ•ᛗ•ᚫᛉᚻᛖᚾ•ᚳᚳᚣᚾᚾ•ᛋᛏᛖᛗ•ᛏᛉ
 ᚣ•ᚾᛁᛏᛈᛖ•ᛗᚳᛚᛗ•:•ᚦᛚ•ᛏᚱᛉᛏᚣ
