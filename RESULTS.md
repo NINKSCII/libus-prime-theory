@@ -1,6 +1,6 @@
-# Validação Matemática da Libus Prime Theory
+# Libus Prime Theory
 
-### Análise Estrutural da Página 57 do *Liber Primus*
+## Validação Matemática e Análise Estrutural do *Liber Primus*
 
 **Autor:** Nink
 **Projeto:** Libus Prime Theory
@@ -9,92 +9,74 @@
 
 ---
 
-# 1. Objetivo
+## 1. Objetivo
 
-Este documento apresenta os resultados experimentais obtidos pela aplicação do **Libus Prime Analysis Engine v2** sobre um trecho real de 204 runas extraído da **Página 57 do *Liber Primus***.
+A **Libus Prime Theory** propõe que o *Liber Primus* possa conter uma estrutura matemática interna relacionada à posição das runas, ao módulo 29, à sequência de Fibonacci e à organização geométrica dos valores da Gematria Primus.
 
-O objetivo do experimento foi testar, sobre dados reais do livro, as duas camadas fundamentais propostas pela **Libus Prime Theory**:
+O motor **Libus Prime Analysis Engine v2** foi desenvolvido para testar essas relações diretamente sobre dados reais do livro.
 
-1. **Camada Posicional:** investigação de relações entre transições consecutivas de runas e a sequência de Fibonacci em módulo 29.
-2. **Camada Geométrica:** investigação da organização espacial das runas através de matrizes e relações de Máximo Divisor Comum (MDC).
+Neste experimento foram analisadas **204 runas da Página 57 do *Liber Primus***, utilizando duas camadas principais:
 
-O experimento também testa diferentes larguras de matriz para verificar se a organização geométrica dos dados produz invariantes ou padrões específicos.
+1. **Camada Posicional** — análise das diferenças entre runas consecutivas e comparação com Fibonacci em módulo 29.
+2. **Camada Geométrica** — organização dos valores das runas em matrizes e análise dos MDCs entre posições vizinhas.
 
-A análise foi realizada diretamente sobre os valores numéricos das runas, sem depender da interpretação semântica do texto.
+Também foram testadas diferentes larguras de matriz para verificar se determinados padrões permanecem ou surgem em configurações específicas.
 
 ---
 
 # 2. Dados analisados
 
-O motor recebeu:
+O trecho utilizado contém:
 
-$$
-\boxed{204\text{ runas}}
-$$
+* **204 runas**
+* **203 diferenças consecutivas**
 
-Como cada transição é calculada entre duas runas consecutivas, foram obtidas:
+As diferenças foram calculadas entre cada par de runas consecutivas.
 
-$$
-204-1=\boxed{203\text{ diferenças}}
-$$
-
-Todas as diferenças da Camada 1 foram analisadas em:
-
-$$
-\mathbb{Z}_{29}
-$$
-
-ou seja, em módulo 29, de acordo com a estrutura de 29 posições da Gematria Primus.
+Todas as diferenças da primeira camada foram analisadas em **módulo 29**, seguindo a estrutura de 29 posições da Gematria Primus.
 
 ---
 
 # 3. Camada 1 — Análise Posicional e Fibonacci
 
-A primeira hipótese da Libus Prime Theory propõe que as transições entre runas possam apresentar uma estrutura posicional não-linear.
+A primeira camada investiga a possibilidade de que as transições entre runas sejam determinadas por uma regra posicional ou não-linear.
 
-Uma das estruturas candidatas é a sequência de Fibonacci reduzida módulo 29.
+Uma das estruturas testadas é a sequência de Fibonacci reduzida módulo 29.
 
-O conjunto de resíduos de Fibonacci utilizado pelo motor é:
+Os resíduos utilizados pelo motor foram:
 
-$$
-\boxed{
-\{0,1,2,3,5,8,13,21,26,28\}
-}
-$$
+```text
+0, 1, 2, 3, 5, 8, 13, 21, 26, 28
+```
 
-Assim, cada uma das 203 diferenças consecutivas foi classificada de acordo com a seguinte pergunta:
+Cada uma das 203 diferenças foi então classificada de acordo com a seguinte condição:
 
-> O resultado da transição pertence ao conjunto de Fibonacci módulo 29?
+> A diferença entre as duas runas pertence ao conjunto de Fibonacci módulo 29?
 
----
-
-## 3.1 Resultado
+## Resultado
 
 O motor encontrou:
 
-$$
-\boxed{74/203}
-$$
+**74 de 203 transições**
 
-transições pertencentes ao conjunto de Fibonacci módulo 29.
+pertencentes ao conjunto Fibonacci módulo 29.
 
 Isso corresponde a:
 
-$$
-\boxed{36,45\%}
-$$
+**36,45%**
 
-Portanto:
+### Resultado principal
 
-**Matches Fibonacci mod 29: 74**
-
-**Taxa observada: 36,45%**
+```text
+204 runas
+203 diferenças
+74 matches com Fibonacci mod 29
+36,45% de correspondência
+```
 
 ---
 
-# 3.2 Distribuição das diferenças
-
-A distribuição das diferenças mais frequentes foi:
+## 3.1 Diferenças mais frequentes
 
 | Diferença | Ocorrências | Fibonacci mod 29 |
 | --------: | ----------: | :--------------: |
@@ -111,81 +93,66 @@ A distribuição das diferenças mais frequentes foi:
 
 Entre os dez valores mais frequentes, quatro pertencem ao conjunto Fibonacci utilizado:
 
-$$
-0,\quad1,\quad28,\quad21
-$$
+```text
+0, 1, 28, 21
+```
 
-Esses valores apresentam as seguintes frequências:
+Esses quatro valores aparecem:
 
-$$
-17+12+9+8=46
-$$
+```text
+17 + 12 + 9 + 8 = 46 vezes
+```
 
-ocorrências.
+Ou aproximadamente:
 
-Isso representa aproximadamente:
-
-$$
-\frac{46}{203}\approx22,66\%
-$$
-
-de todas as transições concentradas somente nesses quatro resíduos.
+**22,66% das 203 transições.**
 
 ---
 
-# 3.3 Interpretação da Camada Posicional
+## 3.2 Interpretação da Camada Posicional
 
-O resultado experimental mostra que a sequência real analisada apresenta:
+O resultado mostra uma presença mensurável de resíduos pertencentes ao conjunto Fibonacci módulo 29 dentro das transições analisadas.
 
-$$
-\boxed{36,45\%}
-$$
+Isso é compatível com a hipótese da **Camada Posicional** da Libus Prime Theory.
 
-de transições pertencentes ao conjunto Fibonacci módulo 29.
+A proposta é que as transições entre runas possam depender não apenas do valor individual de cada runa, mas também de sua posição ou de algum estado matemático associado à sequência.
 
-Esse resultado é compatível com a hipótese da **Camada Posicional**, segundo a qual as transições entre runas podem estar sujeitas a uma regra matemática dependente de posição ou estado.
+O experimento não determina sozinho qual seria essa função.
 
-É importante distinguir duas coisas:
-
-* **o resultado foi observado diretamente nos dados;**
-* **a causa desse resultado ainda precisa ser determinada.**
-
-Portanto, o experimento não estabelece sozinho a fórmula da função posicional.
-
-Ele fornece, porém, um padrão quantitativo concreto que pode ser testado em outras páginas e contra controles aleatórios.
+O ponto importante é que a hipótese produz um padrão que pode ser medido diretamente e testado em outras partes do livro.
 
 ---
 
 # 4. Camada 2 — Estrutura Geométrica por MDC
 
-A segunda camada da Libus Prime Theory parte da hipótese de que a posição espacial das runas pode conter informações matemáticas adicionais.
+A segunda camada parte da possibilidade de que a disposição espacial das runas também carregue informação matemática.
 
-Para testar isso, as 204 runas foram convertidas para valores numéricos e organizadas em matrizes com três larguras diferentes:
+As 204 runas foram convertidas em valores numéricos e organizadas em matrizes com diferentes larguras:
 
-$$
-\boxed{13,\ 14,\ 15}
-$$
+```text
+13 colunas
+14 colunas
+15 colunas
+```
 
-Para cada matriz, o motor calculou o MDC entre elementos vizinhos:
+Para cada configuração, o motor calculou o **MDC entre runas vizinhas**:
 
 * horizontalmente;
 * verticalmente.
 
-O objetivo é verificar a distribuição dos invariantes aritméticos produzidos pela organização espacial.
+O objetivo é identificar possíveis invariantes aritméticos relacionados à organização espacial dos valores.
 
 ---
 
 # 5. Matriz de 13 Colunas
 
-A primeira configuração produziu:
+A primeira configuração produziu uma matriz:
 
-$$
-16\times13
-$$
+```text
+16 × 13
+```
 
-elementos.
-
-## 5.1 Relações horizontais
+## Relações horizontais
 
 | MDC | Ocorrências |
 | --: | ----------: |
@@ -195,7 +162,7 @@ elementos.
 |   5 |           8 |
 |   9 |           4 |
 
-## 5.2 Relações verticais
+## Relações verticais
 
 | MDC | Ocorrências |
 | --: | ----------: |
@@ -205,29 +172,11 @@ elementos.
 |   5 |           6 |
 |   9 |           2 |
 
-O motor calculou:
+### Densidades
 
-$$
-\boxed{51,66\%}
-$$
+**MDC = 1:** 51,66%
 
-de coprimalidade:
-
-$$
-MDC=1
-$$
-
-e:
-
-$$
-\boxed{48,34\%}
-$$
-
-de relações com:
-
-$$
-MDC>1
-$$
+**MDC > 1:** 48,34%
 
 ---
 
@@ -235,21 +184,13 @@ $$
 
 A segunda configuração produziu:
 
-$$
-15\times14
-$$
+```text
+15 × 14
+```
 
-elementos.
+A largura de 14 colunas possui uma relação particularmente interessante com a teoria, pois **14 é o período de Pisano da sequência de Fibonacci módulo 29**.
 
-Essa configuração possui interesse especial porque:
-
-$$
-\boxed{14}
-$$
-
-corresponde ao período de Pisano da sequência de Fibonacci módulo 29.
-
-## 6.1 Relações horizontais
+## Relações horizontais
 
 | MDC | Ocorrências |
 | --: | ----------: |
@@ -259,7 +200,7 @@ corresponde ao período de Pisano da sequência de Fibonacci módulo 29.
 |   5 |           7 |
 |   9 |           4 |
 
-## 6.2 Relações verticais
+## Relações verticais
 
 | MDC | Ocorrências |
 | --: | ----------: |
@@ -269,73 +210,47 @@ corresponde ao período de Pisano da sequência de Fibonacci módulo 29.
 |   5 |           5 |
 |  19 |       **4** |
 
-A densidade total de coprimalidade foi:
+### Densidades
 
-$$
-\boxed{51,66\%}
-$$
+**MDC = 1:** 51,66%
 
-enquanto:
-
-$$
-\boxed{48,34\%}
-$$
-
-das relações apresentaram:
-
-$$
-MDC>1
-$$
+**MDC > 1:** 48,34%
 
 ---
 
-# 6.3 O Invariante MDC = 19
+## 6.1 O MDC = 19
 
-O resultado mais específico encontrado nessa configuração foi:
+Na configuração de 14 colunas, o motor encontrou:
 
-$$
-\boxed{MDC=19}
-$$
+```text
+MDC = 19
+```
 
-com:
+**4 vezes na direção vertical.**
 
-$$
-\boxed{4\text{ ocorrências}}
-$$
+Esse resultado chama atenção porque a matriz possui exatamente **14 colunas**, enquanto 14 é o período de Pisano de Fibonacci módulo 29.
 
-na direção vertical.
+A relação observada pode ser representada como:
 
-Esse valor não apareceu na configuração de 13 colunas na mesma análise.
+```text
+Gematria Primus
+      ↓
+     29
+      ↓
+  Fibonacci
+      ↓
+     14
+      ↓
+   Matriz
+      ↓
+    MDC
+      ↓
+     19
+```
 
-O resultado é particularmente relevante porque ocorre justamente na configuração:
+O MDC 19 também aparece na configuração de 15 colunas, portanto sua presença não é exclusiva da largura 14.
 
-$$
-\boxed{14\text{ colunas}}
-$$
-
-que corresponde ao período de Pisano:
-
-$$
-\boxed{\pi(29)=14}
-$$
-
-Isso cria uma conexão experimental entre:
-
-$$
-\text{Gematria Primus}
-\rightarrow
-29
-\rightarrow
-\text{Fibonacci}
-\rightarrow
-14
-\rightarrow
-\text{estrutura matricial}
-\rightarrow
-MDC=19
-$$
-
-A ocorrência de \(MDC=19\) ainda precisa ser testada em outras páginas e controles antes que se possa determinar se ela constitui um invariante geral do sistema.
+O interesse da configuração de 14 colunas está na combinação entre a largura da matriz e o período de Fibonacci módulo 29.
 
 ---
 
@@ -343,13 +258,11 @@ A ocorrência de \(MDC=19\) ainda precisa ser testada em outras páginas e contr
 
 A terceira configuração produziu:
 
-$$
-14\times15
-$$
+```text
+14 × 15
+```
 
-elementos.
-
-## 7.1 Relações horizontais
+## Relações horizontais
 
 | MDC | Ocorrências |
 | --: | ----------: |
@@ -359,7 +272,7 @@ elementos.
 |   5 |           7 |
 |   9 |           4 |
 
-## 7.2 Relações verticais
+## Relações verticais
 
 | MDC | Ocorrências |
 | --: | ----------: |
@@ -369,362 +282,316 @@ elementos.
 |  19 |       **4** |
 |  14 |           3 |
 
-A densidade de coprimalidade foi:
+### Densidades
 
-$$
-\boxed{52,82\%}
-$$
+**MDC = 1:** 52,82%
 
-e a densidade de relações com:
-
-$$
-MDC>1
-$$
-
-foi:
-
-$$
-\boxed{47,18\%}
-$$
+**MDC > 1:** 47,18%
 
 ---
 
-# 8. Comparação das Três Estruturas
+# 8. Comparação das Matrizes
 
-Os resultados podem ser resumidos da seguinte forma:
+| Largura | Dimensão | Coprimalidade | MDC > 1 | Observação         |
+| ------: | :------: | ------------: | ------: | ------------------ |
+|      13 |  16 × 13 |        51,66% |  48,34% | Estrutura-base     |
+|      14 |  15 × 14 |        51,66% |  48,34% | MDC 19 vertical ×4 |
+|      15 |  14 × 15 |        52,82% |  47,18% | MDC 19 vertical ×4 |
 
-| Largura | Dimensão | Coprimalidade | MDC > 1 | Observação             |
-| ------: | -------: | ------------: | ------: | ---------------------- |
-|      13 |  16 × 13 |    **51,66%** |  48,34% | Estrutura-base         |
-|      14 |  15 × 14 |    **51,66%** |  48,34% | **MDC=19 vertical ×4** |
-|      15 |  14 × 15 |    **52,82%** |  47,18% | MDC=19 vertical ×4     |
+Um ponto importante é que a densidade de coprimalidade das matrizes de 13 e 14 colunas é exatamente a mesma:
 
-Um detalhe importante é que a densidade global de coprimalidade **não muda entre 13 e 14 colunas**:
+```text
+51,66%
+```
 
-$$
-51,66\%
-$$
+Portanto, o interesse da matriz de 14 colunas não está em uma simples diferença percentual.
 
-O que diferencia a matriz de 14 colunas não é, portanto, uma simples redução da coprimalidade.
+O aspecto mais específico está na distribuição dos invariantes, especialmente na ocorrência de:
 
-A diferença observada está na **estrutura específica dos invariantes**, especialmente:
-
-$$
-\boxed{MDC=19}
-$$
+```text
+MDC = 19
+```
 
 na direção vertical.
-
-Isso torna a análise espacial mais interessante do que uma simples comparação percentual.
 
 ---
 
 # 9. Relação entre as Duas Camadas
 
-Os resultados experimentais permitem colocar as duas camadas da Libus Prime Theory no mesmo modelo.
+As duas camadas podem ser representadas da seguinte maneira.
 
 ## Camada Posicional
 
-$$
-\text{Runa}_n
-\rightarrow
-\text{Runa}_{n+1}
-\rightarrow
-\Delta_n\bmod29
-\rightarrow
-\text{Fibonacci}
-$$
+```text
+Runa(n) → Runa(n+1)
+              ↓
+         diferença
+              ↓
+           mod 29
+              ↓
+        Fibonacci
+```
 
 Resultado observado:
 
-$$
-\boxed{36,45\%}
-$$
+**74 de 203 transições — 36,45%**
 
 ---
 
 ## Camada Geométrica
 
-$$
-\text{Runas}
-\rightarrow
-\text{Valores GP}
-\rightarrow
-\text{Matriz}
-\rightarrow
-MDC
-\rightarrow
-\text{Invariantes}
-$$
+```text
+Runas
+  ↓
+Valores da Gematria Primus
+  ↓
+Matriz
+  ↓
+MDC entre vizinhos
+  ↓
+Invariantes
+```
 
 Resultados observados:
 
-$$
-\boxed{51,66\%-52,82\%}
-$$
+**51,66% a 52,82% de coprimalidade**, dependendo da largura da matriz.
 
-de coprimalidade, dependendo da largura da matriz.
-
-Além disso:
-
-$$
-\boxed{MDC=19}
-$$
-
-aparece quatro vezes na direção vertical das configurações de 14 e 15 colunas, enquanto a configuração de 14 colunas possui a relação adicional com:
-
-$$
-\boxed{\pi(29)=14}
-$$
-
----
-
-# 10. O Modelo Libus Prime
-
-A teoria pode ser representada atualmente como:
+Além disso, o valor:
 
 ```text
-                         LIBUS PRIME THEORY
-                                  │
-                    ┌─────────────┴─────────────┐
-                    │                           │
-                    ▼                           ▼
-          CAMADA POSICIONAL              CAMADA GEOMÉTRICA
-                    │                           │
-              Transições                  Organização
-                    │                           │
-                    ▼                           ▼
-             Diferenças mod 29             Matriz numérica
-                    │                           │
-                    ▼                           ▼
-             Fibonacci mod 29                  MDC
-                    │                           │
-                    ▼                           ▼
-             Padrões recorrentes           Invariantes
-                    │                           │
-                    └─────────────┬─────────────┘
-                                  │
-                                  ▼
-                         POSSÍVEL ESTRUTURA
-                         CRIPTOGRÁFICA INTERNA
+MDC = 19
 ```
 
-A hipótese central é que essas duas camadas não sejam independentes.
-
-A possibilidade investigada é:
-
-$$
-\boxed{
-\text{Posição}
-\rightarrow
-\text{Fibonacci}
-\rightarrow
-\text{Módulo 29}
-\rightarrow
-\text{Geometria}
-\rightarrow
-\text{MDC}
-\rightarrow
-\text{Invariante}
-}
-$$
-
-Se os mesmos padrões puderem ser reproduzidos em diferentes páginas e sob condições controladas, será possível investigar se essa cadeia representa parte real do mecanismo utilizado pelo *Liber Primus*.
+aparece 4 vezes verticalmente nas matrizes de 14 e 15 colunas.
 
 ---
 
-# 11. O Que o Experimento Demonstrou
+# 10. Modelo da Libus Prime Theory
 
-O motor v2 produziu resultados concretos sobre os dados analisados:
+A estrutura atual da teoria pode ser representada assim:
 
-### Resultado 1
+```text
+                  LIBUS PRIME THEORY
+                         │
+              ┌──────────┴──────────┐
+              │                     │
+              ▼                     ▼
+      CAMADA POSICIONAL       CAMADA GEOMÉTRICA
+              │                     │
+              ▼                     ▼
+       Transições             Organização espacial
+              │                     │
+              ▼                     ▼
+       Diferenças mod 29       Matriz numérica
+              │                     │
+              ▼                     ▼
+       Fibonacci mod 29             MDC
+              │                     │
+              ▼                     ▼
+        Padrões recorrentes     Invariantes
+              │                     │
+              └──────────┬──────────┘
+                         │
+                         ▼
+              POSSÍVEL ESTRUTURA
+              CRIPTOGRÁFICA INTERNA
+```
 
-Foram analisadas:
+A hipótese central da teoria é que as duas camadas possam estar relacionadas.
 
-$$
-\boxed{204\text{ runas}}
-$$
+A cadeia investigada é:
 
-e:
+```text
+Posição
+   ↓
+Fibonacci
+   ↓
+Módulo 29
+   ↓
+Geometria
+   ↓
+MDC
+   ↓
+Invariante
+```
 
-$$
-\boxed{203\text{ transições}}
-$$
+A possibilidade investigada é que essas relações façam parte de uma estrutura matemática interna do *Liber Primus*.
 
-### Resultado 2
+---
 
-Foram encontradas:
+# 11. O Que o Motor v2 Encontrou
 
-$$
-\boxed{74}
-$$
+O experimento produziu os seguintes resultados principais:
 
-transições pertencentes ao conjunto Fibonacci módulo 29:
+### 1. Dados analisados
 
-$$
-\boxed{36,45\%}
-$$
+```text
+204 runas
+203 transições
+```
 
-### Resultado 3
+### 2. Fibonacci módulo 29
 
-As diferenças mais frequentes incluíram:
+```text
+74 matches
+36,45%
+```
 
-$$
-0,\ 1,\ 28,\ 21
-$$
+### 3. Resíduos Fibonacci entre os mais frequentes
 
-que pertencem ao conjunto Fibonacci utilizado.
+```text
+0
+1
+28
+21
+```
 
-### Resultado 4
+### 4. Estrutura geométrica
 
-A análise geométrica encontrou aproximadamente metade das relações como:
+As três larguras testadas produziram aproximadamente metade das relações com:
 
-$$
-MDC>1
-$$
+```text
+MDC > 1
+```
 
-nas três configurações testadas.
+### 5. MDC = 19
 
-### Resultado 5
+O motor encontrou:
 
-A configuração de 14 colunas produziu:
+```text
+4 ocorrências
+```
 
-$$
-\boxed{MDC=19}
-$$
+de MDC 19 verticalmente na matriz de 14 colunas.
 
-quatro vezes na direção vertical.
+O mesmo valor também apareceu 4 vezes verticalmente na matriz de 15 colunas.
 
-### Resultado 6
+### 6. Relação com Fibonacci
 
-A largura de 14 colunas coincide com:
-
-$$
-\boxed{\pi(29)=14}
-$$
-
-o período de Pisano de Fibonacci módulo 29.
+A largura de 14 colunas coincide com o período de Pisano de Fibonacci módulo 29.
 
 ---
 
 # 12. Conclusão
 
-Os resultados obtidos pelo **Libus Prime Analysis Engine v2** fornecem evidências experimentais para as duas camadas fundamentais da **Libus Prime Theory**.
+Os resultados obtidos pelo **Libus Prime Analysis Engine v2** fornecem suporte experimental às duas camadas fundamentais da **Libus Prime Theory**.
 
-A camada posicional apresentou uma concentração mensurável de transições pertencentes ao conjunto Fibonacci módulo 29:
+A primeira camada encontrou uma frequência de:
 
-$$
-\boxed{36,45\%}
-$$
+**36,45% de transições pertencentes ao conjunto Fibonacci módulo 29.**
 
-enquanto a camada geométrica revelou uma estrutura de divisibilidade mensurável nas relações entre runas vizinhas.
+A segunda camada encontrou padrões mensuráveis de divisibilidade entre runas vizinhas quando os valores são organizados espacialmente em matrizes.
 
-O resultado mais específico da análise geométrica foi a ocorrência de:
+O resultado mais específico observado foi a presença de:
 
-$$
-\boxed{MDC=19}
-$$
+```text
+MDC = 19
+```
 
-quatro vezes na direção vertical da matriz de 14 colunas.
+quatro vezes na direção vertical das matrizes de 14 e 15 colunas.
 
-A importância desse resultado aumenta pela relação:
+A configuração de 14 colunas possui ainda uma relação estrutural importante com a teoria:
 
-$$
-\boxed{\pi(29)=14}
-$$
+```text
+período de Pisano de Fibonacci mod 29 = 14
+```
 
-conectando o módulo da Gematria Primus ao período de Fibonacci utilizado no teste.
+Assim, os dados obtidos sustentam a investigação da seguinte estrutura:
 
-Portanto, o experimento fornece suporte concreto à hipótese de que:
+```text
+Gematria
+   ↕
+Posição
+   ↕
+Fibonacci
+   ↕
+Módulo 29
+   ↕
+Geometria
+   ↕
+MDC
+```
 
-> **A estrutura do *Liber Primus* pode conter relações matemáticas internas que conectam posição, módulo 29, Fibonacci e organização geométrica das runas.**
-
-A teoria agora possui não apenas uma formulação matemática, mas também um **procedimento computacional capaz de produzir resultados mensuráveis sobre dados reais**.
+A teoria deixa de ser apenas uma formulação abstrata e passa a possuir um **procedimento computacional reproduzível**, capaz de produzir resultados quantitativos sobre dados reais do *Liber Primus*.
 
 ---
 
 # 13. Próxima Etapa — Validação Cruzada
 
-A próxima fase da Libus Prime Theory será determinar se os padrões encontrados na Página 57 são:
+O próximo objetivo é determinar se os padrões encontrados são específicos da organização original do *Liber Primus*.
 
-1. reproduzíveis;
-2. independentes da escolha específica da página;
-3. dependentes da ordem original das runas;
-4. diferentes daqueles produzidos por embaralhamento;
-5. consistentes em diferentes páginas do *Liber Primus*.
-
-Os testes prioritários serão:
+Os principais testes serão:
 
 ### A. Teste de embaralhamento
 
-Preservar exatamente as mesmas runas e suas frequências, mas destruir sua ordem.
+Manter exatamente as mesmas runas e suas frequências, mas destruir a ordem original.
 
 ### B. Teste entre páginas
 
-Executar o mesmo motor em diferentes páginas.
+Executar o mesmo motor em diferentes páginas do *Liber Primus*.
 
 ### C. Teste de largura
 
-Expandir a análise para:
+Expandir a análise para diferentes larguras:
 
-$$
-12,\ 13,\ 14,\ 15,\ 16,\ldots
-$$
-
-colunas.
+```text
+12, 13, 14, 15, 16, ...
+```
 
 ### D. Teste de Fibonacci
 
-Verificar se a frequência de resíduos Fibonacci permanece elevada fora da amostra inicial.
+Verificar se a frequência de resíduos Fibonacci permanece elevada em outras amostras.
 
 ### E. Distribuição completa de MDC
 
-Calcular:
-
-$$
-P(MDC=k)
-$$
-
-para todos os valores relevantes de \(k\).
+Analisar a frequência de cada valor de MDC encontrado.
 
 ### F. Busca de invariantes
 
-Procurar valores que apareçam repetidamente em diferentes páginas e desapareçam quando a organização espacial é destruída.
+Procurar valores que apareçam repetidamente em diferentes páginas e verificar se desaparecem quando a organização espacial é destruída.
 
 ---
 
-# 14. Estado Atual da Teoria
+# 14. Estado Atual da Libus Prime Theory
 
-A **Libus Prime Theory** encontra-se atualmente na fase de **validação experimental computacional**.
-
-A teoria possui:
+A **Libus Prime Theory** possui atualmente:
 
 * uma hipótese de duas camadas;
 * uma formulação matemática;
-* um motor de análise;
+* um motor de análise em Python;
 * dados reais do *Liber Primus*;
 * resultados quantitativos;
-* padrões posicionais;
-* padrões geométricos;
-* uma relação observada entre Fibonacci e módulo 29;
-* e um conjunto definido de experimentos para validação cruzada.
+* análise posicional;
+* análise geométrica;
+* relações com Fibonacci;
+* análise em módulo 29;
+* análise por MDC;
+* testes com diferentes larguras de matriz;
+* e uma metodologia definida para validação cruzada.
 
-O objetivo final permanece:
+O objetivo final da investigação é determinar se a combinação:
 
-$$
-\boxed{
-\text{Gematria}
-\leftrightarrow
-\text{Posição}
-\leftrightarrow
-\text{Fibonacci}
-\leftrightarrow
-\text{Módulo 29}
-\leftrightarrow
-\text{Geometria}
-\leftrightarrow
-\text{MDC}
-}
-$$
+```text
+Gematria
+↔
+Posição
+↔
+Fibonacci
+↔
+Módulo 29
+↔
+Geometria
+↔
+MDC
+```
 
-A investigação continuará buscando determinar se essa estrutura matemática pode ser utilizada para identificar uma transformação criptográfica concreta dentro do *Liber Primus*.
+pode revelar uma transformação matemática ou estrutura criptográfica concreta dentro do *Liber Primus*.
+
+---
+
+## Libus Prime Theory
+
+**Nink — Libus Prime Analysis Engine v2**
+
+> Investigando a estrutura matemática interna do *Liber Primus* através de análise posicional, Fibonacci, módulo 29, geometria e teoria dos números.
+
