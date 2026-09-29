@@ -720,6 +720,740 @@ O objetivo permanece o mesmo: determinar se os padrões encontrados na Página 5
 
 ## Libus Prime Theory
 
+
+# Libus Prime Theory — Continuação da Fase 2
+
+## Engenharia Reversa e Caça à Chave Dinâmica
+
+**Atualização do Motor:** Libus Prime Analysis Engine v2.1
+**Foco:** Página 55 do *Liber Primus* (Cicada 3301)
+**Autor:** Nink
+
+---
+
+## 21. Fechamento dos Primeiros Testes de Engenharia Reversa
+
+Após a identificação da relação candidata
+
+```text
+f(x,y) = (15x + 27y) mod 29
+```
+
+e dos primeiros testes com Fibonacci, a pesquisa avançou para uma etapa mais agressiva de engenharia reversa.
+
+O objetivo deixou de ser apenas verificar se existia uma relação matemática entre as runas e passou a ser:
+
+> **Descobrir se essa relação poderia ser utilizada como mecanismo real de geração ou recuperação da chave.**
+
+Foram então testadas diferentes formas de transformar a relação posicional em uma chave dinâmica, incluindo:
+
+* Fibonacci módulo 29;
+* coeficientes 15 e 27;
+* transformações Atbash;
+* chaves dependentes da posição;
+* sequências de números primos;
+* progressões quadráticas;
+* razão áurea;
+* geração em cadeia;
+* modelos semelhantes a LFSR;
+* busca exaustiva de coeficientes e sementes.
+
+Esses experimentos produziram resultados importantes, principalmente por eliminar algumas interpretações possíveis da hipótese original.
+
+---
+
+# 22. Teste de Atbash + Fibonacci
+
+Uma das hipóteses levantadas durante a investigação foi a possibilidade de existir uma camada de **Atbash** integrada ao mecanismo.
+
+A ideia era que a transformação da Página 55 pudesse ocorrer em múltiplas etapas:
+
+```text
+Runa cifrada
+      ↓
+Transformação dinâmica
+      ↓
+Fibonacci / coeficientes
+      ↓
+Atbash
+      ↓
+Texto
+```
+
+Também foram testadas variações nas quais o Atbash era aplicado antes da transformação principal.
+
+O objetivo era verificar se o espelhamento do alfabeto poderia recuperar alguma estrutura linguística que não aparecia na transformação matemática isolada.
+
+### Resultado
+
+Os testes apresentaram redução dos scores.
+
+O maior resultado observado nessa família de transformações foi:
+
+```text
+Score máximo = 90
+```
+
+Além da redução do score, os textos produzidos perderam a estrutura linguística observada nos experimentos anteriores.
+
+### Interpretação
+
+Dentro das condições testadas, a inclusão direta do Atbash não melhorou a descriptografia.
+
+Portanto, o Atbash passa a ser tratado como uma **hipótese experimental enfraquecida para essa etapa específica**, e não como parte confirmada do mecanismo.
+
+Isso não demonstra que o Atbash jamais possa aparecer em outra camada do *Liber Primus*; apenas indica que as combinações testadas não produziram evidência favorável.
+
+---
+
+# 23. Teste de Chaves Dependentes da Posição
+
+A teoria original também permitia uma possibilidade diferente:
+
+> Os coeficientes da transformação poderiam variar conforme a posição da runa.
+
+Em vez de utilizar sempre os mesmos valores:
+
+```text
+X = 15
+Y = 27
+```
+
+o motor passou a testar sequências nas quais os valores da chave eram determinados pelo índice da posição.
+
+Foram testados três modelos principais.
+
+### 23.1. Sequência de números primos
+
+A chave foi construída utilizando a sequência:
+
+```text
+2, 3, 5, 7, 11, 13, ...
+```
+
+com redução módulo 29.
+
+### 23.2. Sequência quadrática
+
+O segundo modelo utilizou:
+
+```text
+1², 2², 3², 4², ...
+```
+
+também reduzidos módulo 29.
+
+### 23.3. Razão áurea
+
+O terceiro modelo utilizou a aproximação:
+
+```text
+floor(i × 1.618)
+```
+
+para produzir uma sequência dependente da posição.
+
+---
+
+## 24. Resultado das Chaves Posicionais
+
+Os três modelos produziram o mesmo resultado experimental:
+
+```text
+Primos      → Score 45
+Quadrados   → Score 45
+Phi         → Score 45
+```
+
+O resultado foi interpretado como um nível de **ruído de fundo** dentro do sistema de pontuação utilizado.
+
+Em uma sequência curta, transformações arbitrárias podem produzir coincidências linguísticas ocasionais, especialmente quando o score procura padrões de letras ou bigramas.
+
+Assim, o Score 45 não foi considerado evidência de que qualquer uma dessas sequências faça parte da cifra.
+
+### Estado da hipótese
+
+Até esse ponto, não foi encontrada evidência experimental favorável para:
+
+```text
+Chave = função direta da posição baseada em primos
+Chave = função quadrática da posição
+Chave = função baseada na razão áurea
+```
+
+Esses modelos foram, portanto, retirados da linha principal de investigação.
+
+---
+
+# 25. A Hipótese da Reação em Cadeia
+
+A hipótese seguinte partiu de uma característica fundamental da teoria:
+
+> Uma runa poderia participar da determinação da próxima runa.
+
+Isso transforma a cifra em um sistema de estado.
+
+A relação candidata:
+
+```text
+z = (15x + 27y) mod 29
+```
+
+poderia então ser interpretada como uma função de retroalimentação.
+
+Nesse modelo:
+
+```text
+Estado anterior
+      ↓
+     x, y
+      ↓
+15x + 27y
+      ↓
+   mod 29
+      ↓
+Novo estado
+      ↓
+Próximo ciclo
+```
+
+Essa interpretação é semelhante conceitualmente a um **Linear Feedback Shift Register (LFSR)**, no qual valores anteriores alimentam o cálculo do próximo estado.
+
+O objetivo era descobrir se a equação identificada na Fase 1 poderia funcionar não apenas como uma relação estatística, mas como um verdadeiro gerador de chave.
+
+---
+
+# 26. Busca pelas Sementes Iniciais
+
+Para testar o modelo em cadeia, o motor não assumiu que a primeira chave era conhecida.
+
+Foram testadas as possibilidades de semente inicial dentro do módulo 29.
+
+O resultado mais interessante apareceu com:
+
+```text
+Semente = 2
+```
+
+A sequência produzida apresentou o início:
+
+```text
+THRERL...
+```
+
+Embora o restante não formasse texto legível, os primeiros caracteres chamaram atenção por apresentarem:
+
+```text
+THR
+```
+
+Esse fragmento é compatível, por coincidência estatística, com inícios de palavras frequentes do inglês, como:
+
+```text
+THREE
+THERE
+THROUGH
+```
+
+O resultado motivou uma busca muito maior.
+
+---
+
+# 27. O Quebrador LFSR Total
+
+O próximo passo foi abandonar a escolha manual dos coeficientes.
+
+O motor passou a testar sistematicamente:
+
+```text
+X = 0 ... 28
+Y = 0 ... 28
+```
+
+e as possibilidades de sementes iniciais.
+
+Como existem:
+
+```text
+29 × 29 = 841
+```
+
+combinações de coeficientes e:
+
+```text
+841
+```
+
+combinações para as duas sementes iniciais, o espaço total explorado foi:
+
+```text
+841 × 841 = 707.281
+```
+
+combinações.
+
+Esse experimento constituiu o **Quebrador LFSR Total**.
+
+---
+
+# 28. Resultado da Busca de 707.281 Combinações
+
+A busca encontrou um conjunto de parâmetros com um score extremamente alto:
+
+```text
+X  = 1
+Y  = 22
+
+K0 = 15
+K1 = 28
+
+Score = 500
+```
+
+O texto produzido começava aproximadamente como:
+
+```text
+GYYLTHTHTHTHEOTREOM...
+```
+
+O resultado parecia inicialmente significativo por causa do score elevado.
+
+Entretanto, a inspeção da própria sequência revelou um problema fundamental.
+
+O texto não apresentava uma estrutura linguística coerente.
+
+Apesar disso, continha repetidamente padrões como:
+
+```text
+TH
+THE
+```
+
+O algoritmo estava sendo recompensado por produzir fragmentos que pareciam inglês, mesmo quando o conjunto completo não correspondia a palavras ou frases reais.
+
+---
+
+# 29. Descoberta da Maximização Gananciosa
+
+O resultado de Score 500 levou à identificação de uma limitação importante no sistema de pontuação.
+
+O algoritmo de avaliação podia favorecer sequências que repetissem determinados padrões linguísticos de alta frequência.
+
+Isso criou um tipo de **maximização gananciosa (*Greedy Maximization*)**.
+
+Em vez de procurar:
+
+> uma sequência que forme uma mensagem coerente,
+
+o sistema estava, em determinadas condições, procurando:
+
+> uma sequência que maximize localmente os padrões recompensados pelo score.
+
+Essa diferença é fundamental.
+
+Uma sequência como:
+
+```text
+TH
+THE
+TH
+THE
+TH
+```
+
+pode acumular muitos pontos em um sistema baseado em padrões frequentes, mas isso não significa que ela represente uma mensagem real.
+
+Portanto:
+
+```text
+Score alto ≠ plaintext correto
+```
+
+Esse experimento demonstrou que o score precisava ser tratado com muito mais cuidado.
+
+---
+
+# 30. A Importância dos Falsos Positivos
+
+O experimento do LFSR mostrou que uma busca matemática pode encontrar soluções que parecem extremamente boas segundo uma métrica, mas que não possuem significado linguístico real.
+
+Isso introduziu uma nova preocupação metodológica na pesquisa:
+
+### O motor precisa diferenciar:
+
+```text
+Padrão estatístico
+        ≠
+Estrutura linguística
+        ≠
+Plaintext real
+```
+
+Um resultado deve, portanto, ser analisado não apenas pelo score numérico, mas também por características como:
+
+* coerência das palavras;
+* estrutura de frases;
+* distribuição de letras;
+* consistência entre diferentes regiões do texto;
+* reprodução do resultado em outras páginas;
+* estabilidade quando os parâmetros são alterados;
+* desempenho fora da amostra utilizada na descoberta.
+
+Essa distinção passa a ser uma parte importante da metodologia do Libus Prime Theory.
+
+---
+
+# 31. O Que o LFSR Total Eliminou
+
+Apesar de o resultado final não produzir plaintext, o experimento foi útil para testar uma interpretação específica da teoria.
+
+A hipótese era:
+
+```text
+15x + 27y
+        ↓
+gerador de estado
+        ↓
+chave
+        ↓
+plaintext
+```
+
+A busca de 707.281 combinações mostrou que é possível produzir scores altos utilizando esse tipo de mecanismo.
+
+Porém, o maior score encontrado também apresentou características de falso positivo.
+
+Dessa forma, **o modelo de LFSR puro não apresentou uma solução linguística coerente para a Página 55**.
+
+Isso enfraquece a interpretação de que a função encontrada na Fase 1 seja, por si só, um gerador completo da chave.
+
+---
+
+# 32. O Que os Experimentos Revelaram Sobre a Estrutura
+
+A Fase 2 não produziu a descriptografia da Página 55.
+
+Entretanto, ela adicionou informações importantes ao modelo.
+
+Até este ponto, foram observadas três camadas distintas de comportamento:
+
+### Camada 1 — Estrutura matemática
+
+A relação:
+
+```text
+f(x,y) = (15x + 27y) mod 29
+```
+
+apresentou uma frequência de acertos superior à linha de base durante a análise inicial.
+
+### Camada 2 — Transformações dinâmicas
+
+Quando a relação foi combinada com Fibonacci e outras operações, alguns scores aumentaram significativamente.
+
+O maior resultado inicial dessa família foi:
+
+```text
+Score = 135
+```
+
+### Camada 3 — Falsos positivos
+
+Quando o mecanismo foi transformado em um gerador de chave em cadeia e submetido a uma busca exaustiva, apareceu:
+
+```text
+Score = 500
+```
+
+mas o texto correspondente não era coerente.
+
+Isso demonstrou que a função de avaliação também precisa ser considerada durante a engenharia reversa.
+
+---
+
+# 33. Novo Estado da Teoria
+
+Depois dos experimentos da Fase 2, a hipótese de trabalho passou a ser representada da seguinte maneira:
+
+```text
+┌──────────────────────────────┐
+│       LIBER PRIMUS           │
+└──────────────┬───────────────┘
+               ↓
+       Estrutura em runas
+               ↓
+       Gematria Primus
+               ↓
+       Módulo 29
+               ↓
+      Relação posicional
+               ↓
+      ┌────────────────┐
+      │ 15x + 27y      │
+      └───────┬────────┘
+              ↓
+      Camada dinâmica ?
+              ↓
+       Chave / Estado ?
+              ↓
+       Transformação ?
+              ↓
+          Inglês ?
+```
+
+A principal questão deixou de ser simplesmente:
+
+> “Qual é a fórmula?”
+
+e passou a ser:
+
+> **“Qual é o papel da fórmula dentro do mecanismo completo?”**
+
+Ela pode representar uma chave, uma transformação intermediária, uma relação entre estados ou apenas uma propriedade estrutural ainda não compreendida.
+
+Os experimentos realizados até agora não permitem decidir entre essas possibilidades.
+
+---
+
+# 34. Hipótese da Cifra Híbrida
+
+Com o enfraquecimento do modelo de geração algébrica pura, surgiu uma nova direção de investigação.
+
+A cifra pode combinar mais de um mecanismo.
+
+Um modelo possível seria:
+
+```text
+Texto original
+      ↓
+Chave-palavra
+      ↓
+Transformação semelhante a Vigenère
+      ↓
+Transposição / permutação
+      ↓
+Transformação modular
+      ↓
+Runas
+```
+
+ou, em ordem diferente:
+
+```text
+Texto
+ ↓
+Transformação estrutural
+ ↓
+Chave dinâmica
+ ↓
+Módulo 29
+ ↓
+Runas
+```
+
+Essa hipótese ainda não foi demonstrada.
+
+Ela representa uma direção experimental baseada no fato de que nenhum dos mecanismos isolados testados até agora produziu uma solução linguística consistente.
+
+---
+
+# 35. Relação com Vigenère
+
+Os resultados da Fase 2 também levaram a uma reconsideração da hipótese de uma cifra semelhante a Vigenère.
+
+A pesquisa não demonstrou que uma cifra do tipo Vigenère esteja presente na Página 55.
+
+Da mesma forma, os experimentos realizados não são suficientes para declarar que Vigenère esteja definitivamente descartada.
+
+A hipótese passa a ser:
+
+```text
+Vigenère isolada
+        ↓
+não explica os resultados observados
+
+Vigenère + transformação estrutural
+        ↓
+hipótese ainda não testada completamente
+```
+
+Isso abre espaço para investigar se uma chave-palavra poderia coexistir com uma transformação matemática ou estrutural.
+
+---
+
+# 36. O Problema do Índice de Coincidência
+
+A pesquisa também passou a considerar que uma transformação estrutural poderia alterar significativamente as estatísticas tradicionais da cifra.
+
+Se uma etapa de transposição ou transformação dinâmica reorganizar as posições das letras, métodos estatísticos tradicionais podem perder eficiência.
+
+Isso significa que um baixo ou estranho Índice de Coincidência não necessariamente elimina a possibilidade de uma substituição linguística subjacente.
+
+A hipótese passa a ser:
+
+```text
+Texto em inglês
+      ↓
+Substituição
+      ↓
+Transposição / transformação
+      ↓
+Cifra final
+```
+
+Nesse cenário, analisar somente a distribuição final das letras pode não ser suficiente.
+
+Essa possibilidade deverá ser testada experimentalmente antes de ser considerada parte da teoria.
+
+---
+
+# 37. O Que Foi Eliminado e o Que Continua Aberto
+
+### Hipóteses enfraquecidas pelos testes
+
+```text
+Atbash direto + Fibonacci
+Chave baseada somente em primos
+Chave baseada somente em quadrados
+Chave baseada somente em Phi
+LFSR puro baseado em 15x + 27y
+```
+
+Esses modelos não produziram uma solução linguística consistente nas condições testadas.
+
+### Hipóteses que continuam abertas
+
+```text
+Transformação híbrida
+Chave-palavra + transformação estrutural
+Transposição
+Permutação das runas
+Chave dinâmica não-LFSR
+Uso intermediário de 15x + 27y
+Combinação entre estrutura modular e contexto linguístico
+```
+
+Nenhuma dessas possibilidades deve ser considerada confirmada neste estágio.
+
+---
+
+# 38. Nova Metodologia de Validação
+
+Os resultados do Score 500 demonstraram que a próxima etapa não pode depender somente da maximização de uma única métrica.
+
+O motor deverá considerar múltiplos critérios.
+
+Um candidato forte deverá apresentar simultaneamente:
+
+```text
+Score linguístico
+       +
+Palavras coerentes
+       +
+Estrutura de frase
+       +
+Estabilidade estatística
+       +
+Reprodução em outras páginas
+       +
+Validação fora da amostra
+```
+
+Isso reduz a possibilidade de que o motor encontre apenas uma sequência que explore uma falha da função de pontuação.
+
+---
+
+# 39. Próxima Direção Experimental
+
+Com o ciclo de geração algébrica praticamente encerrado, a pesquisa pode avançar para uma abordagem mais estrutural.
+
+Os próximos testes podem investigar:
+
+1. **Permutação das posições das runas.**
+2. **Transposição em matrizes.**
+3. **Reordenação utilizando sequências derivadas do módulo 29.**
+4. **Aplicação da função `(15x + 27y) mod 29` sobre posições diferentes.**
+5. **Busca por uma chave-palavra combinada com a transformação modular.**
+6. **Testes de transformação antes e depois da possível chave.**
+7. **Validação da mesma regra em outras páginas.**
+8. **Testes com dados embaralhados para medir falsos positivos.**
+9. **Criação de uma função de score menos vulnerável à repetição de bigramas.**
+10. **Teste fora da amostra para separar descoberta de validação.**
+
+A prioridade passa a ser descobrir **como as operações se combinam**, e não apenas encontrar a operação que produz o maior número isolado.
+
+---
+
+# 40. Conclusão da Fase 2
+
+A Fase 2 encerra o primeiro ciclo de tentativas de transformar a relação matemática encontrada na Fase 1 em um gerador direto de chave.
+
+Os experimentos mostraram que:
+
+```text
+Fibonacci isolado
+        ↓
+não produz plaintext
+
+Atbash + Fibonacci
+        ↓
+não melhora o resultado
+
+Chaves posicionais simples
+        ↓
+produzem apenas score de fundo
+
+LFSR puro
+        ↓
+pode gerar scores extremamente altos,
+mas também produz falsos positivos
+```
+
+O resultado mais importante da fase não foi encontrar a chave, mas identificar uma limitação fundamental do processo de busca:
+
+> **Uma função matemática capaz de maximizar um score linguístico não é necessariamente uma função capaz de recuperar o plaintext.**
+
+O Score 500 demonstrou isso de maneira particularmente clara.
+
+A função:
+
+```text
+f(x,y) = (15x + 27y) mod 29
+```
+
+continua sendo uma peça relevante da investigação, mas seu papel exato permanece em aberto.
+
+A pesquisa agora entra em uma nova etapa:
+
+```text
+                 FASE 1
+                    ↓
+       Identificação da estrutura
+                    ↓
+                 FASE 2
+                    ↓
+      Engenharia reversa algébrica
+                    ↓
+       LFSR / Fibonacci / Atbash
+                    ↓
+          descoberta de falsos
+             positivos
+                    ↓
+              FASE 3
+                    ↓
+      Engenharia estrutural da cifra
+                    ↓
+     Transposição / Permutação /
+       Chave híbrida / Contexto
+```
+
+O próximo objetivo não será simplesmente encontrar o maior score.
+
+Será encontrar uma transformação que produza **uma estrutura linguística coerente, reproduzível e validável independentemente**.
+
+Esse será o próximo estágio da investigação do **Libus Prime Theory**.
+
+
 **Nink — Libus Prime Analysis Engine v2**
 
 *Investigando a possível estrutura matemática interna do Liber Primus através de análise posicional, funções algébricas, módulo 29, Fibonacci, geometria, teoria dos números e engenharia reversa criptográfica.*
