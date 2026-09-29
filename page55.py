@@ -2,9 +2,9 @@ import math
 import re
 from collections import Counter
 
-# =======================================================
+
 # MÓDULO 1: GEMATRIA PRIMUS E LIMPEZA
-# =======================================================
+
 class GematriaEngine:
     GEMATRIA = {
         'ᚠ': 0, 'ᚢ': 1, 'ᚦ': 2, 'ᚩ': 3, 'ᚱ': 4, 'ᚳ': 5, 'ᚷ': 6, 'ᚹ': 7,
@@ -17,9 +17,9 @@ class GematriaEngine:
     def text_to_values(text):
         return [GematriaEngine.GEMATRIA[c] for c in text if c in GematriaEngine.GEMATRIA]
 
-# =======================================================
+
 # MÓDULO 2: MOTOR LIBUS PRIME (TEORIA DAS DUAS CAMADAS)
-# =======================================================
+
 class LibusPrimeEngine:
     @staticmethod
     def analyze_page_55(text):
@@ -89,9 +89,9 @@ class LibusPrimeEngine:
         if best_match > (len(values)-2) * 0.1:
             print("[***] ALERTA: Função algébrica não-linear detectada!")
 
-# =======================================================
+
 # EXECUÇÃO
-# =======================================================
+
 if __name__ == "__main__":
     # As runas REAIS da Página 55 extraídas do arquivo que você mandou
     PAGE_55_RUNES = """
