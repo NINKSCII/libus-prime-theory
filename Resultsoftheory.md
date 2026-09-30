@@ -75,7 +75,7 @@ Foram investigadas organizações das runas em matrizes, incluindo larguras 13, 
 
 Os testes de permutação posteriores não forneceram evidência suficiente para sustentar as interpretações criptográficas específicas testadas.
 
-**Estado:** ❌ não sustentada pelos testes realizados.
+**Estado:**  não sustentada pelos testes realizados.
 
 Isso não significa que nenhuma propriedade geométrica exista no livro; significa que as relações específicas testadas não se distinguiram suficientemente dos controles utilizados.
 
@@ -87,7 +87,7 @@ Foram analisadas diferenças consecutivas das runas e seus resíduos módulo 29,
 
 Os resultados iniciais apresentaram coincidências, mas os controles posteriores não forneceram evidência suficiente para sustentar a hipótese como mecanismo estrutural.
 
-**Estado:** ❌ não sustentada pelos testes realizados.
+**Estado:**  não sustentada pelos testes realizados.
 
 ---
 
@@ -100,7 +100,7 @@ Foram investigadas relações como:
 
 Os testes não apresentaram evidência suficiente para estabelecer esses pares como mecanismo matemático geral.
 
-**Estado:** ❌ não sustentada pelos testes realizados.
+**Estado:**  não sustentada pelos testes realizados.
 
 ---
 
@@ -124,7 +124,7 @@ A hipótese tentava relacionar os primos, a função totiente e o comportamento 
 
 Apesar de algumas configurações produzirem scores linguísticos interessantes, os controles posteriores não sustentaram essa implementação como explicação geral.
 
-**Estado:** ❌ não sustentada pelos testes realizados.
+**Estado:**  não sustentada pelos testes realizados.
 
 ---
 
@@ -333,7 +333,7 @@ não representa uma reprodução uniforme nos três blocos.
 
 ### Estado atual de 15/27
 
-**⚠️ Candidato de investigação, não hipótese confirmada.**
+**Candidato de investigação, não hipótese confirmada.**
 
 A interpretação atual é:
 
@@ -393,7 +393,7 @@ $$
 
 ### Estado atual
 
-**⚠️ Interessante, mas não estabelecido como anomalia.**
+** Interessante, mas não estabelecido como anomalia.**
 
 ---
 
@@ -581,15 +581,15 @@ A regra fundamental será:
 
 | Hipótese                          | Estado                                             |
 | --------------------------------- | -------------------------------------------------- |
-| Geometria/MDC específica          | ❌ Não sustentada pelos testes realizados           |
-| Fibonacci mod 29                  | ❌ Não sustentada pelos testes realizados           |
-| Pares inversos                    | ❌ Não sustentada pelos testes realizados           |
-| Prime + totiente + F-skip         | ❌ Não sustentada pelos testes realizados           |
-| 15/27 como relação universal      | ⚠️ Não estabelecida                                |
-| 0/3 como relação universal        | ❌ Não replicou nos novos dados                     |
-| 14/21 como relação geral          | ❌ Não sustentada pelo controle                     |
-| 25/7 como relação geral           | ⚠️ Interessante, mas não passou no controle global |
-| **Equação específica por página** | 🔬 **Hipótese nova em investigação**               |
+| Geometria/MDC específica          |  Não sustentada pelos testes realizados           |
+| Fibonacci mod 29                  |  Não sustentada pelos testes realizados           |
+| Pares inversos                    |  Não sustentada pelos testes realizados           |
+| Prime + totiente + F-skip         |  Não sustentada pelos testes realizados           |
+| 15/27 como relação universal      |  Não estabelecida                                |
+| 0/3 como relação universal        |  Não replicou nos novos dados                     |
+| 14/21 como relação geral          |  Não sustentada pelo controle                     |
+| 25/7 como relação geral           |  Interessante, mas não passou no controle global |
+| **Equação específica por página** |  **Hipótese nova em investigação**               |
 
 ---
 
