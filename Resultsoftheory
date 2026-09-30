@@ -1,0 +1,701 @@
+# Libus Prime Theory
+
+## Atualização da Investigação — Anomalias Matemáticas e Equações Variáveis por Página
+
+**Autor:** Nink
+**Projeto:** Libus Prime Theory
+**Tema:** Engenharia reversa e criptoanálise do *Liber Primus* — Cicada 3301
+
+---
+
+## 1. Objetivo
+
+A **Libus Prime Theory** investiga a possibilidade de que partes não decifradas do *Liber Primus* contenham estruturas matemáticas ou criptográficas detectáveis diretamente no ciphertext.
+
+A investigação começou com hipóteses específicas — Fibonacci, MDC, relações algébricas, primos, função totiente e máquinas de estado — e evoluiu para uma abordagem mais geral:
+
+> **Em vez de assumir antecipadamente qual é a cifra, procurar propriedades matemáticas e estatísticas reproduzíveis nas runas.**
+
+Uma das principais linhas atuais investiga relações entre **runas consecutivas** dentro do alfabeto Gematria Primus de 29 símbolos.
+
+---
+
+# 2. Gematria Primus e espaço de busca
+
+Cada runa pode ser representada por:
+
+$$
+C_i\in\{0,1,\ldots,28\}
+$$
+
+Como existem 29 símbolos, uma relação envolvendo duas runas consecutivas possui:
+
+$$
+29^2=841
+$$
+
+possibilidades de coeficientes:
+
+$$
+(x,y),\qquad x,y\in\{0,\ldots,28\}
+$$
+
+Isso permite testar sistematicamente todas as 841 combinações.
+
+---
+
+# 3. Hipótese original: 15/27
+
+Uma das relações que chamou atenção foi:
+
+$$
+A_i=(15C_{i-1}+27C_i)\pmod{29}
+$$
+
+Na análise inicial da Page 55, essa relação apresentou uma concentração maior no ciphertext do que em alguns controles analisados.
+
+Valores registrados:
+
+* **Ciphertext:** 13,51%
+* **Plaintext:** 2,70%
+* **Key/State:** 1,35%
+* **Baseline:** aproximadamente 3,45%
+
+Isso levou à hipótese de que `(15,27)` poderia representar uma **assinatura estrutural do ciphertext**, e não necessariamente uma chave de descriptografia.
+
+A hipótese original não afirmava que 15 e 27 eram definitivamente uma chave. A proposta era investigar se eles poderiam representar alguma propriedade do processo de geração ou organização do ciphertext.
+
+---
+
+# 4. Hipóteses matemáticas anteriores
+
+## 4.1. Geometria e MDC
+
+Foram investigadas organizações das runas em matrizes, incluindo larguras 13, 14 e 15, além de MDCs horizontais e verticais.
+
+Os testes de permutação posteriores não forneceram evidência suficiente para sustentar as interpretações criptográficas específicas testadas.
+
+**Estado:** ❌ não sustentada pelos testes realizados.
+
+Isso não significa que nenhuma propriedade geométrica exista no livro; significa que as relações específicas testadas não se distinguiram suficientemente dos controles utilizados.
+
+---
+
+## 4.2. Fibonacci mod 29
+
+Foram analisadas diferenças consecutivas das runas e seus resíduos módulo 29, incluindo resíduos associados à sequência de Fibonacci.
+
+Os resultados iniciais apresentaram coincidências, mas os controles posteriores não forneceram evidência suficiente para sustentar a hipótese como mecanismo estrutural.
+
+**Estado:** ❌ não sustentada pelos testes realizados.
+
+---
+
+## 4.3. Pares inversos
+
+Foram investigadas relações como:
+
+* EA / AE
+* OE / EO
+
+Os testes não apresentaram evidência suficiente para estabelecer esses pares como mecanismo matemático geral.
+
+**Estado:** ❌ não sustentada pelos testes realizados.
+
+---
+
+## 4.4. Prime + totiente + F-skip
+
+Outra hipótese combinava:
+
+$$
+k_i=\phi(p_i)\pmod{29}
+$$
+
+com:
+
+$$
+P_i=(C_i-k_i)\pmod{29}
+$$
+
+e uma regra de sincronização baseada em F-skip.
+
+A hipótese tentava relacionar os primos, a função totiente e o comportamento do F em uma máquina de estados.
+
+Apesar de algumas configurações produzirem scores linguísticos interessantes, os controles posteriores não sustentaram essa implementação como explicação geral.
+
+**Estado:** ❌ não sustentada pelos testes realizados.
+
+---
+
+# 5. Mudança metodológica
+
+Os resultados anteriores provocaram uma mudança importante na investigação.
+
+A pergunta deixou de ser:
+
+> “Qual cifra produz uma mensagem legível?”
+
+e passou a ser:
+
+> **“Existe alguma propriedade matemática do ciphertext que permanece quando controlamos estatisticamente as coincidências?”**
+
+Essa mudança reduz o risco de selecionar uma teoria apenas porque determinado resultado parece formar palavras em inglês.
+
+---
+
+# 6. Busca sistemática dos 841 pares
+
+A relação geral passou a ser:
+
+$$
+A_i=(xC_{i-1}+yC_i)\pmod{29}
+$$
+
+com:
+
+$$
+(x,y)\in\{0,\ldots,28\}^2
+$$
+
+totalizando:
+
+$$
+841
+$$
+
+possibilidades.
+
+O objetivo passou a ser descobrir se alguma relação apresenta uma anomalia que seja:
+
+1. reproduzível;
+2. independente de uma única página;
+3. resistente a permutações;
+4. resistente ao problema de múltiplos testes;
+5. observável em páginas que não participaram da descoberta.
+
+---
+
+# 7. Primeiro conjunto de quatro blocos
+
+Nos quatro blocos analisados inicialmente, a relação `(15,27)` apresentou:
+
+| Bloco | Acertos | Transições | Frequência |
+| ----- | ------: | ---------: | ---------: |
+| B1    |      18 |        269 |      6,69% |
+| B2    |       7 |        269 |      2,60% |
+| B3    |      10 |        229 |      4,37% |
+| B4    |       3 |        261 |      1,15% |
+
+A referência uniforme é:
+
+$$
+\frac1{29}\approx3,45\%
+$$
+
+O B1 foi especialmente interessante: `(15,27)` ficou entre os cinco melhores pares dos 841 naquele bloco.
+
+Entretanto, a mesma relação não manteve sua força nos outros três.
+
+### Conclusão
+
+> **15/27 apresentou um pico forte em um bloco, mas não demonstrou ser uma relação universal nesses quatro blocos.**
+
+---
+
+# 8. Procura por relações consistentes
+
+Em vez de procurar apenas o maior pico individual, foram procurados pares que permanecessem relativamente elevados nos quatro blocos.
+
+Entre os candidatos apareceram:
+
+### `(0,3)`
+
+$$
+17,\ 14,\ 12,\ 13
+$$
+
+### `(14,21)`
+
+$$
+14,\ 17,\ 11,\ 13
+$$
+
+### `(3,4)`
+
+$$
+13,\ 12,\ 11,\ 15
+$$
+
+Esses resultados chamaram atenção porque apresentavam maior estabilidade entre os blocos.
+
+---
+
+# 9. Monte Carlo e permutações
+
+Foi então utilizado um controle por permutação:
+
+1. embaralhar cada bloco;
+2. preservar a composição das 29 runas;
+3. recalcular os 841 pares;
+4. permitir que todos os pares competissem;
+5. repetir milhares de vezes.
+
+Isso é importante porque, com 841 possibilidades, alguns pares naturalmente apresentarão resultados altos por acaso.
+
+---
+
+## 9.1. `(0,3)`
+
+O `(0,3)` parecia especialmente interessante nos quatro blocos originais.
+
+Porém, considerando a competição entre os 841 pares, seu resultado ficou aproximadamente em:
+
+$$
+p\approx0,067
+$$
+
+Portanto:
+
+> **(0,3) não atingiu o nível convencional de 5% no controle global.**
+
+Continua sendo um resultado observável, mas não foi estabelecido como anomalia estatística.
+
+---
+
+## 9.2. `(14,21)`
+
+O `(14,21)` apresentou:
+
+$$
+p\approx0,287
+$$
+
+e perdeu força como candidato principal.
+
+---
+
+# 10. Três novos blocos
+
+Posteriormente foram analisados três novos blocos de runas.
+
+Esses dados são importantes porque permitem testar se os resultados anteriores aparecem fora do conjunto original.
+
+---
+
+# 11. O retorno de 15/27
+
+Nos três novos blocos, `(15,27)` apresentou:
+
+$$
+15,\ 16,\ 4
+$$
+
+correspondências.
+
+Total:
+
+$$
+35
+$$
+
+contra aproximadamente:
+
+$$
+21,6
+$$
+
+esperadas pelo baseline de \(1/29\).
+
+A frequência combinada foi aproximadamente:
+
+$$
+5,58\%
+$$
+
+No teste com `(15,27)` previamente fixado, o resultado apresentou aproximadamente:
+
+$$
+p\approx0,0063
+$$
+
+para esse conjunto.
+
+Isso é relevante porque a relação voltou a apresentar uma concentração acima do esperado em novos dados.
+
+Entretanto:
+
+$$
+15,\ 16,\ 4
+$$
+
+não representa uma reprodução uniforme nos três blocos.
+
+### Estado atual de 15/27
+
+**⚠️ Candidato de investigação, não hipótese confirmada.**
+
+A interpretação atual é:
+
+> 15/27 merece novos testes independentes porque voltou a apresentar sinal estatístico em dados adicionais, mas ainda não demonstrou consistência universal.
+
+---
+
+# 12. O comportamento de `(0,3)` nos novos dados
+
+Nos três novos blocos, `(0,3)` apresentou:
+
+$$
+6,\ 5,\ 2
+$$
+
+ou:
+
+$$
+13/627\approx2,07\%
+$$
+
+Isso ficou abaixo do baseline:
+
+$$
+3,45\%
+$$
+
+Portanto:
+
+> **(0,3) não replicou nos novos dados.**
+
+Isso enfraquece a interpretação de `(0,3)` como relação geral.
+
+---
+
+# 13. Novo candidato: `(25,7)`
+
+Ao procurar novamente entre os 841 pares nos três novos blocos, um dos candidatos mais consistentes foi:
+
+$$
+(25,7)
+$$
+
+com:
+
+$$
+15,\ 14,\ 9
+$$
+
+Entretanto, o controle de Monte Carlo mostrou que resultados desse nível ainda aparecem com frequência suficiente quando os 841 pares competem.
+
+O resultado ficou aproximadamente em:
+
+$$
+p_{\text{Monte Carlo}}\approx0,145
+$$
+
+### Estado atual
+
+**⚠️ Interessante, mas não estabelecido como anomalia.**
+
+---
+
+# 14. Atualização central da teoria
+
+Os resultados modificaram a hipótese original.
+
+A hipótese anterior era aproximadamente:
+
+> **Existe uma relação universal específica, possivelmente 15/27, presente nas páginas.**
+
+A nova hipótese é mais ampla:
+
+> ## **Cada página pode possuir sua própria equação matemática.**
+
+Em vez de assumir:
+
+$$
+A_i=(15C_{i-1}+27C_i)\pmod{29}
+$$
+
+para todas as páginas, podemos investigar:
+
+$$
+\boxed{
+A_i^{(j)}
+=
+(x_jC_{i-1}+y_jC_i)\pmod{29}
+}
+$$
+
+onde:
+
+* \(j\) representa a página;
+* \(x_j\) é um coeficiente específico da página;
+* \(y_j\) é outro coeficiente específico da página.
+
+Assim:
+
+$$
+\text{Página 1}\rightarrow(x_1,y_1)
+$$
+
+$$
+\text{Página 2}\rightarrow(x_2,y_2)
+$$
+
+$$
+\text{Página 3}\rightarrow(x_3,y_3)
+$$
+
+etc.
+
+---
+
+# 15. Por que essa hipótese é importante?
+
+Ela oferece uma possível explicação para um problema encontrado durante os testes:
+
+**um único par pode não funcionar igualmente em todas as páginas.**
+
+Se o sistema for parametrizado por página, então procurar uma única constante universal poderia produzir exatamente o comportamento observado:
+
+* uma relação pode aparecer em uma página;
+* outra relação em outra;
+* outra em uma terceira;
+* e nenhuma dominar o corpus inteiro.
+
+Nesse cenário, o erro poderia estar em assumir:
+
+$$
+(x,y)=\text{constante universal}
+$$
+
+quando talvez o verdadeiro modelo seja:
+
+$$
+(x,y)=f(\text{página})
+$$
+
+---
+
+# 16. A hipótese mais forte
+
+A hipótese não precisa parar simplesmente em:
+
+> “Cada página tem números diferentes.”
+
+Isso seria facilmente ajustável e poderia representar apenas overfitting.
+
+A hipótese realmente interessante é:
+
+$$
+\boxed{
+(x_j,y_j)=f(\text{alguma propriedade da página})
+}
+$$
+
+Ou seja, existe uma regra que determina os coeficientes.
+
+Essa propriedade poderia estar relacionada, por exemplo, a:
+
+* posição da página;
+* número de runas;
+* frequência das runas;
+* quantidade e posição de F;
+* soma Gematria;
+* propriedades dos primos associados;
+* função totiente;
+* estrutura textual;
+* periodicidade;
+* ou outra propriedade mensurável.
+
+Esses elementos são **possibilidades de teste**, não mecanismos já demonstrados.
+
+---
+
+# 17. Como testar a hipótese corretamente
+
+Para evitar overfitting, não basta escolher o melhor `(x,y)` depois de observar uma página.
+
+O protocolo deve ser:
+
+### Etapa 1 — Descoberta
+
+Usar um conjunto de páginas para procurar:
+
+$$
+(x_j,y_j)
+$$
+
+e investigar relações entre esses coeficientes e propriedades das páginas.
+
+### Etapa 2 — Congelamento
+
+Definir a regra encontrada sem modificá-la.
+
+### Etapa 3 — Validação
+
+Aplicar a regra a páginas que **não participaram da descoberta**.
+
+### Etapa 4 — Controle
+
+Comparar os resultados com:
+
+* permutações;
+* páginas de controle;
+* múltiplos testes;
+* composição real das runas;
+* modelos aleatórios.
+
+Se uma regra conseguir prever corretamente o comportamento de páginas novas, a hipótese ganha evidência.
+
+Se falhar repetidamente, ela é enfraquecida.
+
+---
+
+# 18. O problema dos 841 testes
+
+Existe uma dificuldade estatística fundamental:
+
+$$
+29^2=841
+$$
+
+Se procurarmos livremente entre 841 pares em cada página, inevitavelmente alguns apresentarão resultados aparentemente extraordinários.
+
+Por isso, os próximos experimentos devem controlar:
+
+* múltiplos testes;
+* seleção pós-hoc;
+* permutações;
+* tamanho das páginas;
+* composição das runas;
+* páginas utilizadas na descoberta;
+* páginas utilizadas na validação.
+
+A regra fundamental será:
+
+> **Não escolher uma equação porque ela parece boa depois de observar o resultado.**
+
+---
+
+# 19. Estado atual das hipóteses
+
+| Hipótese                          | Estado                                             |
+| --------------------------------- | -------------------------------------------------- |
+| Geometria/MDC específica          | ❌ Não sustentada pelos testes realizados           |
+| Fibonacci mod 29                  | ❌ Não sustentada pelos testes realizados           |
+| Pares inversos                    | ❌ Não sustentada pelos testes realizados           |
+| Prime + totiente + F-skip         | ❌ Não sustentada pelos testes realizados           |
+| 15/27 como relação universal      | ⚠️ Não estabelecida                                |
+| 0/3 como relação universal        | ❌ Não replicou nos novos dados                     |
+| 14/21 como relação geral          | ❌ Não sustentada pelo controle                     |
+| 25/7 como relação geral           | ⚠️ Interessante, mas não passou no controle global |
+| **Equação específica por página** | 🔬 **Hipótese nova em investigação**               |
+
+---
+
+# 20. Próxima fase
+
+A próxima fase da Libus Prime Theory deverá testar:
+
+### Fase 1 — Corpus
+
+Reunir pelo menos 10 páginas independentes.
+
+### Fase 2 — Busca completa
+
+Para cada página:
+
+$$
+(x,y)\in\{0,\ldots,28\}^2
+$$
+
+### Fase 3 — Registro
+
+Registrar o melhor par de cada página **sem alterar o método entre páginas**.
+
+### Fase 4 — Estrutura
+
+Investigar relações entre:
+
+$$
+(x_j,y_j)
+$$
+
+e propriedades mensuráveis da página.
+
+### Fase 5 — Controle
+
+Executar permutações preservando a composição das runas.
+
+### Fase 6 — Validação fora da amostra
+
+Congelar qualquer regra encontrada e testá-la em páginas que não participaram da descoberta.
+
+---
+
+# 21. Princípio da investigação
+
+A teoria não deve tentar provar antecipadamente que determinada fórmula está correta.
+
+O objetivo é encontrar uma estrutura que:
+
+1. apareça nos dados reais;
+2. sobreviva aos controles;
+3. seja reproduzível;
+4. não dependa de seleção pós-hoc;
+5. faça previsões;
+6. funcione em dados independentes.
+
+Somente depois disso deve ser investigado se a estrutura possui significado criptográfico.
+
+---
+
+# 22. Conclusão atual
+
+A investigação não terminou com o enfraquecimento das hipóteses anteriores.
+
+Ela mudou de nível.
+
+A pergunta deixou de ser:
+
+> **“15/27 é a chave?”**
+
+e passou a ser:
+
+> **“Existe uma família de relações matemáticas no ciphertext, possivelmente parametrizada por página?”**
+
+A hipótese de **uma equação matemática específica para cada página** permanece aberta.
+
+Ela ainda não foi demonstrada.
+
+O próximo objetivo é determinar se os coeficientes de cada página são:
+
+$$
+(x_j,y_j)
+$$
+
+puramente aleatórios,
+
+ou se existe uma função:
+
+$$
+\boxed{
+(x_j,y_j)=f(\text{estrutura da página})
+}
+$$
+
+capaz de explicar e, principalmente, **prever** essas relações em páginas independentes.
+
+---
+
+## Status da Libus Prime Theory
+
+**Hipóteses específicas anteriores:** várias foram enfraquecidas ou não sustentadas pelos controles realizados.
+
+**Anomalia 15/27:** não confirmada como relação universal, mas voltou a apresentar sinal em novos dados e permanece como candidata para investigação.
+
+**Nova hipótese:** cada página pode possuir uma equação própria.
+
+**Objetivo atual:** descobrir se essas equações são independentes/aleatórias ou se existe uma regra matemática que determina seus coeficientes.
+
+> **A investigação continua.**
